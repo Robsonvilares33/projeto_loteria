@@ -26,18 +26,16 @@ jobs:
 
       - name: Create output directory
         run: mkdir -p output
-        working-directory: projeto_loteria
 
       - name: Run SIAOL-PRO ML Cycle
         run: |
           echo "=== SIAOL-PRO Daily ML Cycle ===" >> output/cron.log
           echo "Date: $(date -I)" >> output/cron.log
-          python3 projeto_loteria/siaol_pro_daily_cycle.py >> output/cron.log 2>&1
-        working-directory: .
+          python3 siaol_pro_daily_cycle.py >> output/cron.log 2>&1
 
       - name: Upload logs
         uses: actions/upload-artifact@v4
         with:
-          name: siaol-pro-outputs
+          name: siaol-pro-outputs-${{ github.run_number }}
           path: output/
           retention-days: 7
