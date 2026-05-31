@@ -1,51 +1,28 @@
 #!/usr/bin/env python3
 """
-SIAOL-PRO v12.9 - CICLO DIÁRIO COMPLETO (COM SYNC HÍBRIDO)
-Atualiza dados históricos E executa treinamento ML
-Estratégia: API -> Excel -> TXT (sincronização automática)
+SIAOL-PRO v12.9 - CICLO DIÁRIO COMPLETO (API-ONLY)
+Versão standalone para GitHub Actions
+Sincroniza dados via API e executa treinamento ML
 """
-import sys
-sys.path.insert(0, '/workspace/projeto_loteria')
 import os
+import sys
 import json
 import subprocess
 import requests
 from datetime import datetime
-from collections import Counter, OrderedDict
 
-# Configurações
-PROJECT_DIR = "/workspace/projeto_loteria"
+# Configurações - Portable
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(PROJECT_DIR, "output")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 LOTTERIES = {
-    "megasena": {
-        "name": "Mega-Sena",
-        "pick": 6,
-        "range": 60,
-        "api_endpoint": "mega-sena",
-        "file_txt": "megasena-resultados-1-2954.txt",
-        "file_excel": "mega_sena_asloterias_ate_concurso_2937_sorteio.xlsx"
-    },
-    "lotofacil": {
-        "name": "Lotofácil",
-        "pick": 15,
-        "range": 25,
-        "api_endpoint": "lotofacil",
-        "file_txt": "lotofacil-resultados-1-3576.txt",
-        "file_excel": "loto_facil_asloterias_ate_concurso_3533_sorteio.xlsx"
-    },
-    "quina": {
-        "name": "Quina",
-        "pick": 5,
-        "range": 80,
-        "api_endpoint": "quina",
-        "file_txt": "quina-resultados-1-6916.txt",
-        "file_excel": "quina_asloterias_ate_concurso_6873_sorteio.xlsx"
-    }
+    "megasena": {"name": "Mega-Sena", "pick": 6, "range": 60, "api_endpoint": "mega-sena"},
+    "lotofacil": {"name": "Lotofácil", "pick": 15, "range": 25, "api_endpoint": "lotofacil"},
+    "quina": {"name": "Quina", "pick": 5, "range": 80, "api_endpoint": "quina"}
 }
 
-MAX_API_CALLS = 30  # Limite de chamadas API para sincronização incremental
+MAX_DRAWS = 500  # Número máximo de sorteios para análise ML
 
 def log_message(message, log_file):
     """Registra mensagem no log"""
@@ -58,190 +35,87 @@ def log_message(message, log_file):
 def api_latest(api_endpoint):
     """Busca o último concurso da API"""
     try:
-        r = requests.get(f"https://loteriascaixa-api.herokuapp.com/api/{api_endpoint}/latest", timeout=10)
+        r = requests.get(f"https://loteriascaixa-api.herokuapp.com/api/{api_endpoint}/latest", timeout=15)
         if r.status_code == 200:
             return r.json().get('concurso', 0)
-    except: pass
+    except Exception as e:
+        print(f"   ⚠️ Erro API latest: {e}")
     return 0
 
 def api_contest(api_endpoint, contest):
     """Busca um concurso específico da API"""
     try:
-        r = requests.get(f"https://loteriascaixa-api.herokuapp.com/api/{api_endpoint}/{contest}", timeout=10)
+        r = requests.get(f"https://loteriascaixa-api.herokuapp.com/api/{api_endpoint}/{contest}", timeout=15)
         if r.status_code == 200:
             d = r.json()
-            # API retorna 'dezenas' como array de strings
             dezenas = d.get('dezenas', [])
             if dezenas:
                 nums = sorted([int(x) for x in dezenas])
-                # Determinar quantidade baseado na loteria
                 if api_endpoint == "mega-sena": max_nums = 6
                 elif api_endpoint == "lotofacil": max_nums = 15
-                else: max_nums = 5  # quina
+                else: max_nums = 5
                 if len(nums) >= max_nums:
                     return nums[:max_nums]
     except: pass
     return None
 
-def load_excel(path, pick):
-    """Carrega dados do Excel (pula header nas primeiras 5 linhas)"""
-    try:
-        import openpyxl
-        wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
-        ws = wb.active
-        draws = OrderedDict()
-        # Pular header: dados começam na row 6
-        for row in ws.iter_rows(min_row=6, values_only=True):
-            if row and row[0] and isinstance(row[0], (int, float)):
-                contest = int(row[0])
-                numbers = []
-                for val in row[1:pick+2]:
-                    if val and isinstance(val, (int, float)):
-                        n = int(val)
-                        if 1 <= n <= 100:
-                            numbers.append(n)
-                if len(numbers) >= pick:
-                    draws[contest] = sorted(numbers[:pick])
-        wb.close()
-        return draws
-    except Exception as e:
-        print(f"   ⚠️ Erro lendo Excel: {e}")
-        return OrderedDict()
+def sync_via_api(lottery_key, config, log_file):
+    """Sincroniza dados diretamente da API"""
+    print(f"\n  🎰 {config['name']}")
+    log_message(f"Sincronizando {config['name']} via API...", log_file)
 
-def load_txt(path, pick):
-    """Carrega dados do TXT"""
-    draws = OrderedDict()
-    if not os.path.exists(path):
-        return draws
-    with open(path, 'r', encoding='utf-8') as f:
-        for line in f:
-            if '-' not in line:
-                continue
-            parts = line.strip().split('-')
-            if len(parts) >= 2:
-                try:
-                    c = int(parts[0].strip())
-                    nums = [int(n) for n in parts[1].replace(',', ' ').split() if n.strip().isdigit()]
-                    if len(nums) >= pick:
-                        draws[c] = sorted(nums[:pick])
-                except:
-                    pass
-    return draws
+    latest = api_latest(config["api_endpoint"])
+    if not latest:
+        print(f"   ⚠️ Não foi possível obter dados da API")
+        return {"lottery": lottery_key, "name": config["name"], "total_draws": 0, "api_latest": 0}
 
-def save_txt(path, draws, pick):
-    """Salva dados no TXT"""
-    with open(path, 'w', encoding='utf-8') as f:
-        for c in sorted(draws.keys()):
-            f.write(f"{c} - {', '.join(str(n) for n in draws[c])}\n")
+    print(f"   📊 Último concurso: {latest}")
 
-def sync_lottery(lottery_key, config):
-    """Sincronização híbrida: Excel + API -> TXT"""
-    txt_path = os.path.join(PROJECT_DIR, config["file_txt"])
-    exc_path = os.path.join(PROJECT_DIR, config["file_excel"])
+    # Buscar últimos N sorteios
+    draws = []
+    start = max(1, latest - MAX_DRAWS + 1)
 
-    # 1. Carregar TXT atual
-    local = load_txt(txt_path, config["pick"])
-    local_latest = max(local.keys()) if local else 0
+    print(f"   🔄 Baixando sorteios {start} a {latest}...")
+    for c in range(latest, start - 1, -1):
+        nums = api_contest(config["api_endpoint"], c)
+        if nums:
+            draws.append(nums)
+        if len(draws) >= MAX_DRAWS:
+            break
 
-    # 2. Carregar Excel
-    excel = load_excel(exc_path, config["pick"])
-    excel_latest = max(excel.keys()) if excel else 0
+    print(f"   ✅ {len(draws)} sorteios carregados")
 
-    # 3. API check
-    api_latest_val = api_latest(config["api_endpoint"])
-
-    # 4. Estratégia: usar base mais recente
-    merged = OrderedDict()
-    if excel_latest > local_latest:
-        merged.update(excel)
-    else:
-        merged.update(local)
-
-    # 5. Complementar com API (máx MAX_API_CALLS)
-    if api_latest_val > max(merged.keys()):
-        missing = api_latest_val - max(merged.keys())
-        calls = min(missing, MAX_API_CALLS)
-        start = max(merged.keys()) + 1
-        for c in range(start, start + calls):
-            nums = api_contest(config["api_endpoint"], c)
-            if nums:
-                merged[c] = nums
-
-    # 6. Salvar resultado final
-    save_txt(txt_path, merged, config["pick"])
-    final_latest = max(merged.keys())
+    # Salvar dados em JSON para o ML
+    data_file = os.path.join(OUTPUT_DIR, f"{lottery_key}_data.json")
+    with open(data_file, 'w') as f:
+        json.dump({"draws": draws, "latest": latest}, f)
 
     return {
         "lottery": lottery_key,
         "name": config["name"],
-        "local_latest": local_latest,
-        "excel_latest": excel_latest,
-        "api_latest": api_latest_val,
-        "final_latest": final_latest,
-        "total_draws": len(merged),
-        "updated": final_latest > local_latest
+        "total_draws": len(draws),
+        "api_latest": latest
     }
 
-def update_lottery_data(lottery_key, config, log_file):
-    """Atualiza dados usando sincronização híbrida"""
-    print(f"   🔄 Sincronizando {config['name']}...")
-
-    result = sync_lottery(lottery_key, config)
-
-    if result["updated"]:
-        print(f"   ✅ Sincronizado: {result['final_latest']} ({result['total_draws']} sorteios)")
-    else:
-        print(f"   ℹ️ Dados já atualizados: {result['final_latest']}")
-
-    return result
-
-def load_historical_draws(lottery_key, config):
-    """Carrega sorteios históricos de um arquivo"""
-    file_path = os.path.join(PROJECT_DIR, config["file_txt"])
-
-    if not os.path.exists(file_path):
-        return []
-
-    draws = []
-    with open(file_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            parts = line.strip().split('-')
-            if len(parts) >= 2:
-                try:
-                    nums_str = parts[1].strip().replace(',', ' ')
-                    numbers = [int(n.strip()) for n in nums_str.split() if n.strip().isdigit()]
-                    if len(numbers) >= config["pick"]:
-                        draws.append(sorted(numbers[:config["pick"]]))
-                except:
-                    pass
-
-    return draws[-500:] if len(draws) > 500 else draws
-
-def run_ml_training():
-    """Executa o script de treinamento ML"""
+def run_ml_training(lottery_key):
+    """Executa treinamento ML para uma loteria"""
     training_script = os.path.join(PROJECT_DIR, "siaol_pro_ml_v12_3_training.py")
 
     if os.path.exists(training_script):
-        print(f"\n   🌲 Executando treinamento ML...")
+        print(f"\n   🌲 Executando treinamento ML para {lottery_key}...")
         result = subprocess.run(
-            [sys.executable, training_script],
+            [sys.executable, training_script, "--lottery", lottery_key],
             capture_output=True,
             text=True,
             cwd=PROJECT_DIR
         )
 
-        # Print output to see any errors
         if result.stdout:
-            print(result.stdout[:2000])
+            print(result.stdout[:1000])
         if result.stderr:
             print(f"   ⚠️ Erro ML: {result.stderr[:500]}")
 
-        if result.returncode == 0:
-            print(f"   ✅ Treinamento ML concluído com sucesso")
-            return True
-        else:
-            print(f"   ⚠️ Erro no treinamento ML")
-            return False
+        return result.returncode == 0
     else:
         print(f"   ⚠️ Script de treinamento não encontrado")
         return False
@@ -253,38 +127,35 @@ def main():
 
     print("\n" + "=" * 68)
     print("║  SIAOL-PRO v12.9 - CICLO DIÁRIO COMPLETO              ║")
-    print("║     Sincronização Híbrida + Treinamento ML            ║")
+    print("║     Sincronização via API + Treinamento ML              ║")
     print("╚" + "=" * 68)
     print(f"  📅 Data/Hora: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"  📁 Projeto: {PROJECT_DIR}")
     print(f"  📁 Log: {os.path.basename(log_file)}")
 
     log_message("=" * 50, log_file)
     log_message("INICIANDO CICLO DIÁRIO", log_file)
-    log_message(f"Estratégia: Excel + API -> TXT", log_file)
+    log_message(f"Estratégia: API Only", log_file)
     log_message(f"Data/Hora: {datetime.now().isoformat()}", log_file)
     log_message("=" * 50, log_file)
 
-    # PASSO 1: Sincronização híbrida dos dados
+    # PASSO 1: Sincronização via API
     print(f"\n{'─' * 68}")
-    print("  📊 PASSO 1: Sincronização Híbrida de Dados")
+    print("  📊 PASSO 1: Sincronização via API")
     print(f"{'─' * 68}")
 
     update_results = []
     for lottery_key, config in LOTTERIES.items():
-        print(f"\n  🎰 {config['name']}")
-        log_message(f"Sincronizando {config['name']}...", log_file)
+        result = sync_via_api(lottery_key, config, log_file)
+        update_results.append(result)
+        log_message(f"  {config['name']}: {result['total_draws']} sorteios (API: {result['api_latest']})", log_file)
 
-        sync_result = update_lottery_data(lottery_key, config, log_file)
-        update_results.append(sync_result)
-
-        log_message(f"  {config['name']}: {sync_result['total_draws']} sorteios (final: {sync_result['final_latest']})", log_file)
-
-    # PASSO 2: Executar treinamento ML
+    # PASSO 2: Treinamento ML
     print(f"\n{'─' * 68}")
     print("  🌲 PASSO 2: Treinamento de Machine Learning")
     print(f"{'─' * 68}")
 
-    ml_success = run_ml_training()
+    ml_success = run_ml_training("all")
 
     # Finalização
     print(f"\n{'=' * 68}")
