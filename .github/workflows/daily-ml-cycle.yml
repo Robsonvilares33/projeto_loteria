@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests openpyxl
+          pip install requests openpyxl matplotlib pillow
 
       - name: Create output directory
         run: mkdir -p output
@@ -33,9 +33,13 @@ jobs:
           echo "Date: $(date -I)" >> output/cron.log
           python3 siaol_pro_daily_cycle.py >> output/cron.log 2>&1
 
-      - name: Upload logs
+      - name: Generate Visual Analysis
+        run: |
+          python3 siaol_pro_visual_analysis.py >> output/visual.log 2>&1
+
+      - name: Upload all outputs
         uses: actions/upload-artifact@v4
         with:
           name: siaol-pro-outputs-${{ github.run_number }}
           path: output/
-          retention-days: 7
+          retention-days: 30
