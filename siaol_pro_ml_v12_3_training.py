@@ -56,7 +56,7 @@ def generate_ml_based_games(draws, config, num_games=10):
 
     if len(draws) < 10:
         # Dados insuficientes, gerar jogos aleatórios
-        return [[random.sample(range(1, total_range + 1), pick) for _ in range(num_games)]]
+        return [sorted(random.sample(range(1, total_range + 1), pick)) for _ in range(num_games)]
 
     # Frequência
     freq = frequency_analysis(draws, config)
@@ -74,7 +74,7 @@ def generate_ml_based_games(draws, config, num_games=10):
     games.append(sorted(mixed))
 
     # Jogo com números médios (não mais quentes nem mais frios)
-    all_sorted = [n for n, _ in sorted(freq.items(), key=lambda x: x[1])]
+    all_sorted = [n for n, _ in sorted(freq, key=lambda x: x[1])]
     mid_start = len(all_sorted) // 3
     mid_end = len(all_sorted) * 2 // 3
     mid_nums = all_sorted[mid_start:mid_end]
