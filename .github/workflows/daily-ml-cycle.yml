@@ -34,14 +34,16 @@ jobs:
           python3 siaol_pro_daily_cycle.py >> output/cron.log 2>&1
 
       - name: Generate Visual Analysis
+        continue-on-error: true
         run: |
-          python3 siaol_pro_visual_analysis.py >> output/visual.log 2>&1
+          python3 siaol_pro_visual_analysis.py >> output/visual.log 2>&1 || echo "Visual analysis skipped"
 
       - name: Generate AI Analysis (Groq)
         if: env.GROQ_API_KEY != ''
+        continue-on-error: true
         run: |
           echo "=== AI Analysis ===" >> output/ai.log
-          python3 siaol_pro_ai_analysis.py >> output/ai.log 2>&1
+          python3 siaol_pro_ai_analysis.py >> output/ai.log 2>&1 || echo "AI analysis skipped"
 
       - name: Upload all outputs
         uses: actions/upload-artifact@v4
