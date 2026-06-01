@@ -42,8 +42,15 @@ jobs:
         if: env.GROQ_API_KEY != ''
         continue-on-error: true
         run: |
-          echo "=== AI Analysis ===" >> output/ai.log
+          echo "=== AI Analysis (Groq) ===" >> output/ai.log
           python3 siaol_pro_ai_analysis.py >> output/ai.log 2>&1 || echo "AI analysis skipped"
+
+      - name: Generate AI Analysis (MiniMax)
+        if: env.MINIMAX_API_KEY != ''
+        continue-on-error: true
+        run: |
+          echo "=== AI Analysis (MiniMax) ===" >> output/minimax.log
+          python3 siaol_pro_minimax_analysis.py >> output/minimax.log 2>&1 || echo "MiniMax analysis skipped"
 
       - name: Upload all outputs
         uses: actions/upload-artifact@v4
