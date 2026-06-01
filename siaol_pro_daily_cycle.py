@@ -17,7 +17,7 @@ OUTPUT_DIR = os.path.join(PROJECT_DIR, "output")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 LOTTERIES = {
-    "megasena": {"name": "Mega-Sena", "pick": 6, "range": 60, "api_endpoint": "mega-sena"},
+    "megasena": {"name": "Mega-Sena", "pick": 6, "range": 60, "api_endpoint": "megasena"},
     "lotofacil": {"name": "Lotofácil", "pick": 15, "range": 25, "api_endpoint": "lotofacil"},
     "quina": {"name": "Quina", "pick": 5, "range": 80, "api_endpoint": "quina"}
 }
