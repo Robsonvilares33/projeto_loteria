@@ -9,6 +9,9 @@ on:
 jobs:
   run-ml-cycle:
     runs-on: ubuntu-latest
+    # Forçar Node.js 24 para evitar aviso de deprecação
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
     steps:
       - name: Checkout repository
