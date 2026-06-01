@@ -47,51 +47,60 @@ def fetch_recent_draws(api_endpoint, count=100):
 
 def plot_frequency_chart(draws, config, filename):
     """Gera gráfico de frequência"""
-    if not draws:
+    try:
+        if not draws:
+            return None
+
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+
+        all_nums = []
+        for d in draws:
+            all_nums.extend(d)
+
+        freq = Counter(all_nums)
+
+        # Preparar dados
+        numbers = list(range(1, config['range'] + 1))
+        frequencies = [freq.get(n, 0) for n in numbers]
+        expected = len(all_nums) / config['range'] if all_nums else 0
+
+        # Criar figura
+        fig, ax = plt.subplots(figsize=(12, 6))
+
+        colors = ['#FF6B6B' if f > expected * 1.1 else '#4ECDC4' if f < expected * 0.9 else '#95A5A6'
+                  for f in frequencies]
+
+        bars = ax.bar(numbers, frequencies, color=colors, edgecolor='white', linewidth=0.5)
+
+        if expected > 0:
+            ax.axhline(y=expected, color='#E74C3C', linestyle='--', linewidth=2, label=f'Esperado: {expected:.1f}')
+
+        ax.set_xlabel('Número', fontsize=12)
+        ax.set_ylabel('Frequência', fontsize=12)
+        ax.set_title(f'{config["name"]} - Frequência (últimos {len(draws)} sorteios)', fontsize=14, fontweight='bold')
+
+        # Destacar top 5
+        top5 = sorted(freq.items(), key=lambda x: x[1], reverse=True)[:5]
+        for n, f in top5:
+            if n <= config['range'] and n <= len(bars):
+                bars[n-1].set_edgecolor('#2C3E50')
+                bars[n-1].set_linewidth(2)
+
+        ax.legend()
+        ax.set_xlim(0, config['range'] + 1)
+
+        plt.tight_layout()
+
+        filepath = os.path.join(OUTPUT_DIR, filename)
+        plt.savefig(filepath, dpi=100, bbox_inches='tight')
+        plt.close('all')
+
+        return filepath
+    except Exception as e:
+        print(f"      ⚠️ Erro no gráfico de frequência: {e}")
         return None
-
-    all_nums = []
-    for d in draws:
-        all_nums.extend(d)
-
-    freq = Counter(all_nums)
-
-    # Preparar dados
-    numbers = list(range(1, config['range'] + 1))
-    frequencies = [freq.get(n, 0) for n in numbers]
-    expected = len(all_nums) / config['range']
-
-    # Criar figura
-    fig, ax = plt.subplots(figsize=(12, 6))
-
-    colors = ['#FF6B6B' if f > expected * 1.1 else '#4ECDC4' if f < expected * 0.9 else '#95A5A6'
-              for f in frequencies]
-
-    bars = ax.bar(numbers, frequencies, color=colors, edgecolor='white', linewidth=0.5)
-
-    ax.axhline(y=expected, color='#E74C3C', linestyle='--', linewidth=2, label=f'Esperado: {expected:.1f}')
-
-    ax.set_xlabel('Número', fontsize=12)
-    ax.set_ylabel('Frequência', fontsize=12)
-    ax.set_title(f'{config["name"]} - Frequência (últimos {len(draws)} sorteios)', fontsize=14, fontweight='bold')
-
-    # Destacar top 5
-    top5 = sorted(freq.items(), key=lambda x: x[1], reverse=True)[:5]
-    for n, f in top5:
-        if n <= config['range']:
-            bars[n-1].set_edgecolor('#2C3E50')
-            bars[n-1].set_linewidth(2)
-
-    ax.legend()
-    ax.set_xlim(0, config['range'] + 1)
-
-    plt.tight_layout()
-
-    filepath = os.path.join(OUTPUT_DIR, filename)
-    plt.savefig(filepath, dpi=100, bbox_inches='tight')
-    plt.close()
-
-    return filepath
 
 def plot_evolution_chart(draws, config, filename):
     """Gera gráfico de evolução temporal"""
@@ -189,35 +198,47 @@ def main():
 
     reports = []
 
-    for key, config in LOTTERIES.items():
-        print(f"\n📊 Processando {config['name']}...")
+    try:
+        for key, config in LOTTERIES.items():
+            print(f"\n📊 Processando {config['name']}...")
 
-        # Buscar dados
-        draws = fetch_recent_draws(config['api_endpoint'], count=100)
-        print(f"   ✅ {len(draws)} sorteios carregados")
+            # Buscar dados
+            draws = fetch_recent_draws(config['api_endpoint'], count=100)
+            print(f"   ✅ {len(draws)} sorteios carregados")
 
-        if draws:
-            # Gerar gráficos
-            print("   📈 Gerando gráficos...")
+            if draws:
+                # Gerar gráficos
+                print("   📈 Gerando gráficos...")
 
-            f1 = plot_frequency_chart(draws, config, f"freq_{key}.png")
-            if f1:
-                print(f"      ✅ Frequência: {os.path.basename(f1)}")
+                try:
+                    f1 = plot_frequency_chart(draws, config, f"freq_{key}.png")
+                    if f1:
+                        print(f"      ✅ Frequência: {os.path.basename(f1)}")
+                except Exception as e:
+                    print(f"      ⚠️ Frequência: erro - {e}")
 
-            f2 = plot_evolution_chart(draws, config, f"evolution_{key}.png")
-            if f2:
-                print(f"      ✅ Evolução: {os.path.basename(f2)}")
+                try:
+                    f2 = plot_evolution_chart(draws, config, f"evolution_{key}.png")
+                    if f2:
+                        print(f"      ✅ Evolução: {os.path.basename(f2)}")
+                except Exception as e:
+                    print(f"      ⚠️ Evolução: erro - {e}")
 
-            f3 = plot_hot_cold_pie(draws, config, f"hotcold_{key}.png")
-            if f3:
-                print(f"      ✅ Pizza: {os.path.basename(f3)}")
+                try:
+                    f3 = plot_hot_cold_pie(draws, config, f"hotcold_{key}.png")
+                    if f3:
+                        print(f"      ✅ Pizza: {os.path.basename(f3)}")
+                except Exception as e:
+                    print(f"      ⚠️ Pizza: erro - {e}")
 
-            # Gerar relatório
-            report = generate_summary_report(draws, config)
-            reports.append(report)
+                # Gerar relatório
+                report = generate_summary_report(draws, config)
+                reports.append(report)
 
-            print(f"   🔥 Top 5 quentes: {report['hot_numbers'][:5]}")
-            print(f"   ❄️ Top 5 frios: {report['cold_numbers'][:5]}")
+                print(f"   🔥 Top 5 quentes: {report['hot_numbers'][:5]}")
+                print(f"   ❄️ Top 5 frios: {report['cold_numbers'][:5]}")
+    except Exception as e:
+        print(f"\n⚠️ Erro geral: {e}")
 
     # Salvar relatório geral
     summary = {
