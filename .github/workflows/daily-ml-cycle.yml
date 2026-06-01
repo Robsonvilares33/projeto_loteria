@@ -37,6 +37,12 @@ jobs:
         run: |
           python3 siaol_pro_visual_analysis.py >> output/visual.log 2>&1
 
+      - name: Generate AI Analysis (Groq)
+        if: env.GROQ_API_KEY != ''
+        run: |
+          echo "=== AI Analysis ===" >> output/ai.log
+          python3 siaol_pro_ai_analysis.py >> output/ai.log 2>&1
+
       - name: Upload all outputs
         uses: actions/upload-artifact@v4
         with:
