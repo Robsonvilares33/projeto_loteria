@@ -16,8 +16,8 @@ import requests
 from datetime import datetime
 from collections import Counter
 
-# Configuração
-PROJECT_DIR = "/workspace/projeto_loteria"
+# Configuração - detecta o diretório automaticamente
+PROJECT_DIR = os.getcwd()
 OUTPUT_DIR = os.path.join(PROJECT_DIR, "output")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
