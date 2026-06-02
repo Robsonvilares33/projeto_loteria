@@ -12,6 +12,8 @@ jobs:
     # Forçar Node.js 24 para evitar aviso de deprecação
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
     steps:
       - name: Checkout repository
@@ -30,11 +32,16 @@ jobs:
       - name: Create output directory
         run: mkdir -p output
 
-      - name: Run SIAOL-PRO ML Cycle
+      - name: Configure Telegram
+        run: |
+          echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" > .env.telegram
+          echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env.telegram
+
+      - name: Run SIAOL-PRO Complete Cycle (with Telegram)
         run: |
           echo "=== SIAOL-PRO Daily ML Cycle ===" >> output/cron.log
           echo "Date: $(date -I)" >> output/cron.log
-          python3 siaol_pro_daily_cycle.py >> output/cron.log 2>&1
+          python3 siaol_pro_cron_complete.py >> output/cron.log 2>&1
 
       - name: Generate Visual Analysis
         continue-on-error: true
