@@ -9,7 +9,7 @@ on:
 jobs:
   run-ml-cycle:
     runs-on: ubuntu-latest
-    # Forçar Node.js 24 para evitar aviso de deprecação
+    timeout-minutes: 10
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -27,44 +27,25 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests openpyxl matplotlib pillow
+          pip install requests
 
       - name: Create output directory
         run: mkdir -p output
 
-      - name: Configure Telegram
+      - name: Verify Telegram Config
         run: |
-          echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" > .env.telegram
-          echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env.telegram
+          echo "=== TELEGRAM CONFIG ==="
+          echo "Token length: ${#TELEGRAM_BOT_TOKEN}"
+          echo "Chat ID: $TELEGRAM_CHAT_ID"
 
-      - name: Run SIAOL-PRO Complete Cycle (with Telegram)
+      - name: Run SIAOL-PRO for GitHub Actions
         run: |
-          echo "=== SIAOL-PRO Daily ML Cycle ===" >> output/cron.log
-          echo "Date: $(date -I)" >> output/cron.log
-          python3 siaol_pro_cron_complete.py >> output/cron.log 2>&1
+          echo "=== STARTING SIAOL-PRO ==="
+          python3 siaol_pro_github_actions.py
 
-      - name: Generate Visual Analysis
-        continue-on-error: true
-        run: |
-          python3 siaol_pro_visual_analysis.py >> output/visual.log 2>&1 || echo "Visual analysis skipped"
-
-      - name: Generate AI Analysis (Groq)
-        if: env.GROQ_API_KEY != ''
-        continue-on-error: true
-        run: |
-          echo "=== AI Analysis (Groq) ===" >> output/ai.log
-          python3 siaol_pro_ai_analysis.py >> output/ai.log 2>&1 || echo "AI analysis skipped"
-
-      - name: Generate AI Analysis (MiniMax)
-        if: env.MINIMAX_API_KEY != ''
-        continue-on-error: true
-        run: |
-          echo "=== AI Analysis (MiniMax) ===" >> output/minimax.log
-          python3 siaol_pro_minimax_analysis.py >> output/minimax.log 2>&1 || echo "MiniMax analysis skipped"
-
-      - name: Upload all outputs
+      - name: Upload outputs
         uses: actions/upload-artifact@v4
         with:
           name: siaol-pro-outputs-${{ github.run_number }}
           path: output/
-          retention-days: 30
+          retention-days: 7

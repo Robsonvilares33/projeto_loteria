@@ -456,47 +456,36 @@ def main():
     print(f"  📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
 
-    # Carregar Telegram - primeiro do arquivo, depois de variáveis de ambiente
-    env_file = os.path.join(PROJECT_DIR, ".env.telegram")
+    # Carregar Telegram - PRIORIDADE: variáveis de ambiente (GitHub Actions)
+    # Se não tiver, usa arquivo .env.telegram (local)
     token = os.environ.get('TELEGRAM_BOT_TOKEN', '')
     chat_id = os.environ.get('TELEGRAM_CHAT_ID', '')
 
-    # Se não encontrou nas variáveis, tenta ler do arquivo
+    # Se não encontrou nas variáveis de ambiente, tenta ler do arquivo
     if not token or not chat_id:
+        env_file = os.path.join(PROJECT_DIR, ".env.telegram")
         if os.path.exists(env_file):
             with open(env_file, 'r') as f:
                 for line in f:
-                    if '=' in line:
-                        key, val = line.strip().split('=', 1)
-                        if key == 'TELEGRAM_BOT_TOKEN' and not token:
-                            token = val
-                        elif key == 'TELEGRAM_CHAT_ID' and not chat_id:
-                            chat_id = val
+                    line = line.strip()
+                    if '=' in line and not line.startswith('#'):
+                        key, val = line.split('=', 1)
+                        if key == 'TELEGRAM_BOT_TOKEN':
+                            token = val.strip()
+                        elif key == 'TELEGRAM_CHAT_ID':
+                            chat_id = val.strip()
 
     # Debug: mostrar o que foi carregado
     print(f"\n🔍 DEBUG - Configuração Telegram:")
     print(f"   Token: {'✅ Configurado' if token else '❌ Vazio'}")
     print(f"   Chat ID: {'✅ Configurado' if chat_id else '❌ Vazio'}")
 
+    # Se ainda não tem token, mostrar erro detalhado
     if not token:
-        print("❌ TELEGRAM_BOT_TOKEN não configurado")
-        print("   Procure: .env.telegram ou variável TELEGRAM_BOT_TOKEN")
-        # Criar arquivo de debug
-        debug_file = os.path.join(OUTPUT_DIR, "debug_env.txt")
-        with open(debug_file, 'w') as f:
-            f.write(f"PROJECT_DIR: {PROJECT_DIR}\n")
-            f.write(f"env_file exists: {os.path.exists(env_file)}\n")
-            f.write(f"TELEGRAM_BOT_TOKEN env: {os.environ.get('TELEGRAM_BOT_TOKEN', 'NOT SET')}\n")
-            f.write(f"TELEGRAM_CHAT_ID env: {os.environ.get('TELEGRAM_CHAT_ID', 'NOT SET')}\n")
-            if os.path.exists(env_file):
-                f.write(f"\n.env.telegram contents:\n")
-                with open(env_file, 'r') as ef:
-                    f.write(ef.read())
-        return
-
-    if not chat_id or chat_id == 'SEU_CHAT_ID_AQUI':
-        print("❌ TELEGRAM_CHAT_ID não configurado")
-        return
+        print("\n❌ ERRO: TELEGRAM_BOT_TOKEN não encontrado")
+        print("   Verifique se as secrets TELEGRAM_BOT_TOKEN estão configuradas no GitHub")
+        print("   Ou se o arquivo .env.telegram existe")
+        # Não return - tentar continuar mesmo assim para ver o erro completo
 
     print("✅ Telegram configurado")
 
