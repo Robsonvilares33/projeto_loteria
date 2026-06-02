@@ -2,11 +2,10 @@
 """
 SIAOL-PRO - VERSÃO QUÂNTICA PARA GITHUB ACTIONS
 ================================================
-Script com simulador quântico de 20 qubits
-- Simulação de computador quântico
+Script com simulador quântico otimizado para baixa memória
+- Simulação eficiente de qubits
 - Exploração de espaço de parâmetros
 - Geração de jogos via estados quânticos
-- Mínimo de dependências (apenas requests + numpy)
 """
 import os
 import sys
@@ -31,69 +30,70 @@ LOTTERIES = {
 }
 
 MAX_DRAWS = 300
-NUM_QUBITS = 20  # Simulador quântico de 20 qubits
 
 # ============================================================
-# MÓDULO QUÂNTICO - SIMULADOR DE 20 QUBITS
+# MÓDULO QUÂNTICO - SIMULAÇÃO EFICIENTE
 # ============================================================
 
-class QuantumSimulator20:
-    """Simulador de computador quântico com 20 qubits"""
+class QuantumSimulatorLight:
+    """
+    Simulador quântico otimizado para baixa memória
+    Usa simulação por estado em vez de matriz completa
+    """
 
-    def __init__(self, num_qubits=NUM_QUBITS):
+    def __init__(self, num_qubits=12):  # Reduzido para 12 qubits
         self.num_qubits = num_qubits
         self.dim = 2 ** num_qubits
-        self.reset()
-        log(f"🧊 Quantum initialized: {num_qubits} qubits, {self.dim:,} states")
+        # Estado como vetor de complexos - apenas 2^n elementos
+        self.state = np.zeros(self.dim, dtype=np.complex128)
+        self.state[0] = 1.0 + 0j
+        log(f"🧊 Quantum Light: {num_qubits} qubits, {self.dim:,} states")
 
     def reset(self):
         """Reinicia para estado |0...0⟩"""
-        self.state = np.zeros(self.dim, dtype=np.complex128)
+        self.state.fill(0)
         self.state[0] = 1.0 + 0j
 
-    def apply_gate(self, gate, target_qubits):
-        """Aplica porta quântica multi-qubit"""
-        if len(target_qubits) != int(math.log2(gate.shape[0])):
-            raise ValueError(f" porta precisa de {int(math.log2(gate.shape[0]))} qubits")
-
-        full_gate = self._build_full_gate(gate, target_qubits)
-        self.state = full_gate @ self.state
-
-    def _build_full_gate(self, gate, target_qubits):
-        """Constrói porta completa no espaço de Hilbert"""
-        full = np.array([[1.0]])
-        for i in range(self.num_qubits - 1, -1, -1):
-            if i in target_qubits:
-                idx = target_qubits.index(i)
-                full = np.kron(gate[idx] if len(target_qubits) > 1 else gate, full)
-            else:
-                full = np.kron(np.eye(2), full)
-        return full
-
     def H(self, qubit):
-        """Porta Hadamard - cria superposição"""
-        H = np.array([[1, 1], [1, -1]]) / np.sqrt(2)
-        self.apply_gate(H, [qubit])
+        """Porta Hadamard - cria superposição (operação eficiente)"""
+        factor = 1.0 / math.sqrt(2)
+        for i in range(self.dim):
+            if (i >> qubit) & 1:
+                val = self.state[i]
+                self.state[i] = (-val.real + val.imag * 1j) * factor
+            else:
+                val = self.state[i]
+                self.state[i] = (val.real + val.imag * 1j) * factor
 
     def X(self, qubit):
         """Porta Pauli-X (NOT)"""
-        X = np.array([[0, 1], [1, 0]])
-        self.apply_gate(X, [qubit])
+        mask = 1 << qubit
+        for i in range(self.dim // 2):
+            j = i * 2
+            bit = (j >> qubit) & 1
+            if bit:
+                j_flipped = j ^ mask
+            else:
+                j_flipped = j | mask
+            if j_flipped > j:
+                self.state[j], self.state[j_flipped] = self.state[j_flipped], self.state[j]
 
     def Z(self, qubit):
         """Porta Pauli-Z (defase)"""
-        Z = np.array([[1, 0], [0, -1]])
-        self.apply_gate(Z, [qubit])
+        mask = 1 << qubit
+        for i in range(self.dim):
+            if i & mask:
+                self.state[i] *= -1
 
     def CNOT(self, control, target):
         """Porta CNOT - cria entanglement"""
-        dim = 4
-        CNOT = np.zeros((dim, dim), dtype=np.complex128)
-        CNOT[0, 0] = 1
-        CNOT[1, 1] = 1
-        CNOT[2, 3] = 1
-        CNOT[3, 2] = 1
-        self.apply_gate(CNOT, [control, target])
+        mask_c = 1 << control
+        mask_t = 1 << target
+        for i in range(self.dim):
+            if i & mask_c:
+                self.state[i] = self.state[i ^ mask_t]
+            else:
+                self.state[i] = self.state[i & ~mask_t | ((i & mask_t) if not (i & mask_c) else 0)]
 
     def get_probabilities(self):
         """Retorna probabilidades de todos os estados"""
@@ -106,48 +106,54 @@ class QuantumSimulator20:
         return -np.sum(probs * np.log2(probs))
 
     def measure(self):
-        """Mede todos - retorna índice do estado"""
+        """Mede - retorna índice do estado"""
         probs = self.get_probabilities()
         probs /= probs.sum()
         result = np.random.choice(self.dim, p=probs)
-        self.state = np.zeros(self.dim, dtype=np.complex128)
+        self.state.fill(0)
         self.state[result] = 1.0
         return result
+
+    def apply_parametric_rotation(self, qubit, angle):
+        """Rotação paramétrica - usada para explorar espaço de parâmetros"""
+        mask = 1 << qubit
+        cos_a = math.cos(angle)
+        sin_a = math.sin(angle)
+        for i in range(self.dim):
+            if i & mask:
+                real_part = self.state[i].real * cos_a - self.state[i].imag * sin_a
+                imag_part = self.state[i].real * sin_a + self.state[i].imag * cos_a
+                self.state[i] = complex(real_part, imag_part)
 
 
 class QuantumParameterExplorer:
     """Explorador de espaço de parâmetros quânticos"""
 
-    def __init__(self, num_qubits=NUM_QUBITS):
-        self.sim = QuantumSimulator20(num_qubits)
-        self.results = []
+    def __init__(self, num_qubits=12):
+        self.sim = QuantumSimulatorLight(num_qubits)
+        self.num_qubits = num_qubits
 
-    def create_superposition_state(self, num_active_qubits=10):
-        """Cria estado de superposição em subespaço"""
-        self.sim.reset()
-        for q in range(num_active_qubits):
-            self.sim.H(q)
-        for q in range(0, num_active_qubits - 1, 2):
-            if q + 1 < num_active_qubits:
-                self.sim.CNOT(q, q + 1)
-
-    def explore_parameters(self, dimensions, shots=1000):
-        """Explora espaço de parâmetros quânticos"""
+    def explore_parameters(self, dimensions, shots=100):
+        """Explora espaço de parâmetros quânticos de forma eficiente"""
         results = []
+        states_count = Counter()
 
         for _ in range(shots):
             self.sim.reset()
-            for q, dim in enumerate(dimensions):
-                if q < self.sim.num_qubits:
+
+            # Criar superposição com parâmetros
+            for q, dim in enumerate(dimensions[:self.num_qubits]):
+                if q < self.num_qubits:
                     self.sim.H(q)
-                    if dim > 1:
-                        for _ in range(dim // 2):
-                            self.sim.X(q)
+                    # Aplicar rotações paramétricas
+                    angle = (q + 1) * math.pi / (len(dimensions) + 1)
+                    self.sim.apply_parametric_rotation(q, angle)
 
             probs = self.sim.get_probabilities()
             top_idx = np.argmax(probs)
             entropy = self.sim.get_entropy()
 
+            states_count[top_idx] += 1
             results.append({
                 'state': top_idx,
                 'probability': probs[top_idx],
@@ -156,15 +162,15 @@ class QuantumParameterExplorer:
 
         return {
             'shots': shots,
-            'unique_states': len(set(r['state'] for r in results)),
+            'unique_states': len(states_count),
             'avg_entropy': np.mean([r['entropy'] for r in results]),
             'max_probability': max(r['probability'] for r in results),
-            'results': results[:10]  # Top 10
+            'top_states': states_count.most_common(10)
         }
 
 
 def quantum_generate_games(config, draws, num_games=10):
-    """Gera jogos usando simulação quântica de 20 qubits"""
+    """Gera jogos usando simulação quântica"""
     if len(draws) < 10:
         return []
 
@@ -179,14 +185,14 @@ def quantum_generate_games(config, draws, num_games=10):
         weights[num] = (f / total) * 100 if total > 0 else 0.1
 
     # Inicializar simulador quântico
-    explorer = QuantumParameterExplorer(NUM_QUBITS)
+    explorer = QuantumParameterExplorer(12)  # 12 qubits = 4096 estados
 
     # Explorar espaço de parâmetros
-    log(f"  🧊 Explorando {2**NUM_QUBITS:,} estados quânticos...")
-    dimensions = [min(10, config["range"]), min(8, config["range"]), min(6, config["range"])]
-    quantum_result = explorer.explore_parameters(dimensions, shots=500)
+    log(f"  🧊 Explorando {2**12:,} estados quânticos...")
+    dimensions = [6, 6, 6, 6, 6, 6]
+    quantum_result = explorer.explore_parameters(dimensions, shots=100)
 
-    log(f"  📊 Estados únicos explorados: {quantum_result['unique_states']}")
+    log(f"  📊 Estados únicos: {quantum_result['unique_states']}")
     log(f"  📊 Entropia média: {quantum_result['avg_entropy']:.4f}")
 
     # Gerar jogos quânticos
@@ -200,30 +206,24 @@ def quantum_generate_games(config, draws, num_games=10):
         hot = [n for n, w in sorted(weights.items(), key=lambda x: x[1], reverse=True)[:20]]
 
     # Gerar jogos com bias quântico
-    np.random.seed(int(datetime.now().timestamp()) % 1000000)
-
     for i in range(num_games):
-        # Usar estados quânticos para selecionar números
-        explorer.create_superposition_state(min(10, config["pick"]))
-
-        # Mapear estados quânticos para números
         if i < len(hot) // 2:
             selected = sorted(random.sample(hot, min(config["pick"], len(hot))))
         else:
-            # Seleção quântica
+            # Seleção baseada em probabilidades
             probs = np.array([weights.get(n, 0.1) for n in all_range])
             probs = probs / probs.sum()
-            selected = sorted(np.random.choice(all_range, config["pick"], replace=False, p=probs))
+            selected = sorted(np.random.choice(all_range, config["pick"], replace=False, p=probs).tolist())
 
-        # Adicionar variação quântica
-        if len(selected) < config["pick"]:
+        # Garantir tamanho correto
+        while len(selected) < config["pick"]:
             remaining = [n for n in all_range if n not in selected]
-            selected.extend(random.sample(remaining, config["pick"] - len(selected)))
+            selected.append(random.choice(remaining))
             selected = sorted(selected[:config["pick"]])
 
         games.append({
             "game_id": i + 1,
-            "numbers": selected,
+            "numbers": selected[:config["pick"]],
             "quantum_entropy": quantum_result['avg_entropy'],
             "source": "quantum"
         })
@@ -317,7 +317,7 @@ def check_games(games, resultado):
 def main():
     log("=" * 60)
     log("SIAOL-PRO QUANTUM - GitHub Actions")
-    log(f"🧊 Simulador de {NUM_QUBITS} qubits ativo")
+    log("🧊 Simulador quântico otimizado ativo")
     log("=" * 60)
 
     # Carregar Telegram
@@ -331,13 +331,16 @@ def main():
         log("❌ Telegram não configurado - abortando")
         return 1
 
+    num_qubits = 12
+    total_states = 2**num_qubits
+
     # Enviar mensagem inicial
     msg = f"""🧊 <b>SIAOL-PRO QUANTUM</b>
 ━━━━━━━━━━━━━━━━━━━━
 ⚡ Ciclo quântico iniciando
 📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-🔧 Simulador: {NUM_QUBITS} qubits
-💫 Estados: {2**NUM_QUBITS:,}"""
+🔧 Simulador: {num_qubits} qubits
+💫 Estados: {total_states:,}"""
     send_telegram(token, chat_id, msg)
 
     results = []
@@ -362,8 +365,8 @@ def main():
                 "games": checked,
                 "resultado": data["resultado"],
                 "quantum_info": {
-                    "qubits": NUM_QUBITS,
-                    "states_explored": 2**NUM_QUBITS,
+                    "qubits": num_qubits,
+                    "states_explored": total_states,
                     "entropy": games[0]["quantum_entropy"] if games else 0
                 }
             }, f, indent=2)
@@ -376,7 +379,7 @@ def main():
 
         msg = f"""📊 <b>{config['name']}</b>
 Concurso: {data['latest']}
-🧊 Qubits: {NUM_QUBITS} | Entropia: {quantum_entropy:.2f}
+🧊 Qubits: {num_qubits} | Entropia: {quantum_entropy:.2f}
 ━━━━━━━━━━━━━━━━━━━━
 ✅ Resultado: {resultado_str}
 
@@ -406,7 +409,7 @@ Concurso: {data['latest']}
     msg = f"""⚡ <b>SIAOL-PRO QUANTUM - COMPLETO</b>
 ━━━━━━━━━━━━━━━━━━━━
 📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-🧊 {NUM_QUBITS} qubits | {2**NUM_QUBITS:,} estados
+🧊 {num_qubits} qubits | {total_states:,} estados
 
 📊 Resultados:
 """
