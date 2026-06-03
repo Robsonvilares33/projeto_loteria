@@ -14,6 +14,7 @@ jobs:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
 
     steps:
       - name: Checkout with LFS
@@ -42,6 +43,17 @@ jobs:
 
       - name: Run SIAOL-PRO SUPREMO MAX v4 AUTO-EVOLUTIVO
         run: python3 siaol_pro_supremo_max_v4.py
+
+      - name: Run AI COUNCIL - Conselho de IAs em Diálogo
+        run: |
+          echo ""
+          echo "╔═══════════════════════════════════════════════════════════╗"
+          echo "║  🧠 AI COUNCIL - CONSELHO DE IAs EM DIÁLOGO              ║"
+          echo "╚═══════════════════════════════════════════════════════════╝"
+          echo ""
+          python3 siaol_ai_council.py --quick
+          echo ""
+          echo "✅ AI Council executado com sucesso"
 
       - name: Upload Memory
         uses: actions/upload-artifact@v4
