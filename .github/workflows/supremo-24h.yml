@@ -51,7 +51,7 @@ jobs:
           echo "║  🧠 AI COUNCIL - CONSELHO DE IAs EM DIÁLOGO              ║"
           echo "╚═══════════════════════════════════════════════════════════╝"
           echo ""
-          python3 siaol_ai_council.py --quick
+          python3 siaol_ai_council.py
           echo ""
           echo "✅ AI Council executado com sucesso"
 

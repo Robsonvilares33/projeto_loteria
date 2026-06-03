@@ -219,14 +219,26 @@ class AICouncil:
     def setup_members(self):
         """Configura os membros do conselho"""
 
+        # Detectar IA disponível
+        provider, model = AIProviders.get_available_ai()
+        if provider == "groq":
+            ai_model = "llama-3.1-8b-instant"  # Groq usa este modelo
+        elif provider == "ollama":
+            ai_model = model
+        else:
+            ai_model = "llama3"  # Default
+            provider = "ollama"
+
+        print(f"🔍 AI Detected: {provider} / {ai_model}")
+
         # QUANTUM MASTER - Especialista Quântico
         quantum_master = CouncilMember(
             name="QUANTUM_MASTER",
             role="Especialista em Computação Quântica",
             specialty="Simulação quântica, portas lógicas, superposição, emaranhamento",
             color="🔮",
-            model="llama3",  # ou "mistral", "codellama"
-            provider="ollama",
+            model=ai_model,
+            provider=provider,
             system_prompt="""Você é um especialista em computação quântica.
 Analise os aspectos quânticos do sistema de loterias:
 - Como melhorar a simulação de qubits
@@ -244,8 +256,8 @@ Analise os aspectos quânticos do sistema de loterias:
             role="Especialista em Estatística",
             specialty="Probabilidade, inferência bayesiana, distribuições",
             color="📊",
-            model="llama3",
-            provider="ollama",
+            model=ai_model,
+            provider=provider,
             system_prompt="""Você é um estatístico especialista em loterias.
 Analise os aspectos estatísticos:
 - Frequência de números历史
@@ -263,8 +275,8 @@ Analise os aspectos estatísticos:
             role="Especialista em Detecção de Padrões",
             specialty="Machine learning, redes neurais, reconhecimento de padrões",
             color="🔍",
-            model="llama3",
-            provider="ollama",
+            model=ai_model,
+            provider=provider,
             system_prompt="""Você é um especialista em detecção de padrões.
 Analise padrões nos dados:
 - Sequências numéricas recorrentes
@@ -282,8 +294,8 @@ Analise padrões nos dados:
             role="Especialista em Algoritmos Evolutivos",
             specialty="Algoritmos genéticos, Seleção natural, Adaptação",
             color="🧬",
-            model="llama3",
-            provider="ollama",
+            model=ai_model,
+            provider=provider,
             system_prompt="""Você é um especialista em evolução e adaptação.
 Analise a evolução do sistema:
 - Parâmetros que precisam evoluir
@@ -301,8 +313,8 @@ Analise a evolução do sistema:
             role="Conselheiro Sênior Integrador",
             specialty="Integração, síntese, decisões estratégicas",
             color="🧙",
-            model="llama3",
-            provider="ollama",
+            model=ai_model,
+            provider=provider,
             system_prompt="""Você é o conselheiro sênior que integra todas as sugestões.
 Sua função é:
 - Sintetizar insights de todas as IAs
