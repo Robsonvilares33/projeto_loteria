@@ -44,6 +44,9 @@ jobs:
       - name: Run SIAOL-PRO SUPREMO MAX v4 AUTO-EVOLUTIVO
         run: python3 siaol_pro_supremo_max_v4.py
 
+      - name: Sync Complete Database
+        run: python3 siaol_complete_database.py --sync
+
       - name: Run AI COUNCIL - Conselho de IAs em Diálogo
         run: |
           echo ""
