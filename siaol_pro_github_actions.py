@@ -149,7 +149,7 @@ class QuantumParameterExplorer:
             'shots': shots,
             'unique_states': len(states_count),
             'avg_entropy': np.mean([r['entropy'] for r in results]),
-            'max_probability': max(r['probability'] for r in results]),
+            'max_probability': max(r['probability'] for r in results),
             'top_states': states_count.most_common(10)
         }
 
