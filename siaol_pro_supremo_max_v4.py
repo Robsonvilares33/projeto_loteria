@@ -521,6 +521,62 @@ class StatAnalyzer:
 
         return {n: max(0.01, expected[n]/sims) for n in expected}
 
+    def fft_analysis(self, draws, top_n=10):
+        """Análise FFT para detectar ciclos ocultos nos sorteios"""
+        if len(draws) < 20:
+            return {}
+
+        n_range = self.config["range"]
+        time_series = np.zeros((n_range, len(draws)))
+
+        # Criar série temporal: 1 se número apareceu, 0 se não
+        for t, draw in enumerate(draws):
+            for num in draw:
+                if 1 <= num <= n_range:
+                    time_series[num - 1, t] = 1
+
+        # Para cada número, calcular FFT e encontrar ciclos dominantes
+        fft_scores = {}
+        for num in range(1, n_range + 1):
+            signal = time_series[num - 1]
+
+            # FFT
+            fft_result = np.fft.fft(signal)
+            freqs = np.fft.fftfreq(len(signal))
+
+            # Encontrar frequências dominantes (excluindo DC e muito baixas)
+            magnitudes = np.abs(fft_result)
+            magnitudes[0] = 0  # Remover componente DC
+
+            # Encontrar pico de frequência
+            if len(magnitudes) > 1:
+                dominant_freq_idx = np.argmax(magnitudes[1:]) + 1
+                dominant_freq = abs(freqs[dominant_freq_idx]) if dominant_freq_idx < len(freqs) else 0
+
+                # Calcular período (ciclos por quantidade de concursos)
+                if dominant_freq > 0:
+                    period = int(1 / dominant_freq) if dominant_freq != 0 else 0
+                else:
+                    period = 0
+
+                # Score baseado na magnitude e regularidade
+                fft_scores[num] = {
+                    'magnitude': float(magnitudes[dominant_freq_idx]) if dominant_freq_idx < len(magnitudes) else 0,
+                    'period': period,
+                    'regularity': float(magnitudes[dominant_freq_idx]) / max(sum(magnitudes), 1) if sum(magnitudes) > 0 else 0
+                }
+            else:
+                fft_scores[num] = {'magnitude': 0, 'period': 0, 'regularity': 0}
+
+        # Ordenar por magnitude de ciclo
+        sorted_by_cycle = sorted(fft_scores.items(), key=lambda x: x[1]['magnitude'], reverse=True)
+
+        return {
+            'top_cyclics': [n for n, s in sorted_by_cycle[:top_n]],
+            'cycles_detected': sum(1 for n, s in fft_scores.items() if s['magnitude'] > 2),
+            'avg_period': np.mean([s['period'] for s in fft_scores.values() if s['period'] > 0]) if fft_scores else 0
+        }
+
 # ============================================================
 # PORTFÓLIO PERSISTENTE
 # ============================================================
@@ -711,6 +767,18 @@ def main():
         cold_numbers = [n for n, c in freq.most_common()[-15:] if n <= config["range"]]
         recommended = hot_numbers[:config["pick"]]
 
+        # ========== ANÁLISE FFT - CICLOS OCULTOS ==========
+        log("  📡 FFT Analysis (Ciclos Ocultos)...")
+        stat = StatAnalyzer(config)
+        fft_result = stat.fft_analysis(data["draws"], top_n=10)
+        if fft_result:
+            log(f"     📊 Ciclos detectados: {fft_result.get('cycles_detected', 0)}")
+            log(f"     📈 Top ciclícos: {fft_result.get('top_cyclics', [])[:5]}")
+            # Ajustar pesos baseado em ciclos detectados
+            for num in fft_result.get('top_cyclics', [])[:5]:
+                if num in weights:
+                    weights[num] *= 1.15  # Bônus de 15% para números cíclicos
+
         # ========== GERAR JOGOS COM SISTEMA EVOLUTIVO ==========
         log("  🔬 Quantum Engine (Auto-Evolutivo)...")
         qe = QuantumEngine(qubits=12, params=params)
@@ -728,13 +796,25 @@ def main():
         stat = StatAnalyzer(config)
         stat_games = ml.predict(data["draws"], 4)
 
+        # FFT-enhanced games (reprocess with cyclics)
+        log("  📡 FFT-enhanced predictions...")
+        fft_games = []
+        if fft_result and fft_result.get('top_cyclics'):
+            cyclics = fft_result['top_cyclics'][:config["pick"]]
+            other_nums = [n for n in range(1, config["range"]+1) if n not in cyclics]
+            for _ in range(4):
+                game = sorted(cyclics + random.sample(other_nums, config["pick"] - len(cyclics)))
+                if len(game) == config["pick"]:
+                    fft_games.append(game)
+
         # Combinar
         all_games = []
         seen = set()
         sources = [
             ("Q-EVO", quantum_games),
             ("ML", ml_games),
-            ("STAT", stat_games)
+            ("STAT", stat_games),
+            ("FFT", fft_games)  # Nova fonte baseada em ciclos
         ]
 
         for src, games in sources:
