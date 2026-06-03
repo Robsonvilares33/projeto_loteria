@@ -40,8 +40,8 @@ jobs:
           echo "Token: ${#TELEGRAM_BOT_TOKEN} chars"
           echo "Chat ID: $TELEGRAM_CHAT_ID"
 
-      - name: Run SIAOL-PRO SUPREMO MAX COMPLETO
-        run: python3 siaol_pro_supremo_complete.py
+      - name: Run SIAOL-PRO SUPREMO MAX v4 AUTO-EVOLUTIVO
+        run: python3 siaol_pro_supremo_max_v4.py
 
       - name: Upload Memory
         uses: actions/upload-artifact@v4
