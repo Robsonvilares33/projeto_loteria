@@ -1,4 +1,4 @@
-name: SIAOL-PRO SUPREMO 24H
+name: SIAOL-PRO SUPREMO MAX 24H
 
 on:
   schedule:
@@ -9,7 +9,7 @@ on:
 jobs:
   run-supremo:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 10
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -36,12 +36,12 @@ jobs:
 
       - name: Verify Telegram Config
         run: |
-          echo "=== SIAOL-PRO SUPREMO ==="
+          echo "=== SIAOL-PRO SUPREMO MAX ==="
           echo "Token: ${#TELEGRAM_BOT_TOKEN} chars"
           echo "Chat ID: $TELEGRAM_CHAT_ID"
 
-      - name: Run SIAOL-PRO SUPREMO
-        run: python3 siaol_pro_supremo_24h.py
+      - name: Run SIAOL-PRO SUPREMO MAX
+        run: python3 siaol_pro_supremo_fast.py
 
       - name: Upload Memory
         uses: actions/upload-artifact@v4
