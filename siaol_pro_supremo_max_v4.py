@@ -826,16 +826,16 @@ def main():
 
         log(f"  ✅ Total: {len(all_games)} jogos únicos")
 
-        # Salvar no portfólio
-        if is_new:
-            for src, games in sources:
+        # Salvar no portfólio - SEMPRE adicionar (evita duplicatas automaticamente)
+        for src, games in sources:
+            if games:
                 portfolio.add_games(key, games, src, latest)
 
-            # Registrar resultados para evolução
-            for src, game in all_games:
-                if resultado:
-                    hits = len(set(game) & set(resultado))
-                    evolution.record_result(key, src, hits, game)
+        # Registrar resultados para evolução
+        for src, game in all_games:
+            if resultado:
+                hits = len(set(game) & set(resultado))
+                evolution.record_result(key, src, hits, game)
 
         # Verificar prêmios
         premiums = []
