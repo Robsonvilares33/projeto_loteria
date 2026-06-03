@@ -335,6 +335,37 @@ class QuantumSimFast:
                 self.state[i] = v.real*ct + 1j*v.imag*ct + v.real*st + 0j
         self.gate_count += 1
 
+    def CNOT(self, control, target):
+        """Porta CNOT - Emaranhamento quântico"""
+        mask_control = 1 << control
+        mask_target = 1 << target
+        for i in range(self.dim):
+            if i & mask_control:  # Control qubit is 1
+                if i & mask_target:  # Target is 1 -> flip to 0
+                    self.state[i] = 0
+                    self.state[i ^ mask_target] += self.state[i - mask_target] if i >= mask_target else 0
+                else:  # Target is 0 -> flip to 1
+                    new_i = i | mask_target
+                    temp = self.state[i]
+                    self.state[i] = 0
+                    self.state[new_i] += temp
+        self.gate_count += 1
+
+    def measure(self, q):
+        """Medição de um qubit - colapsa para 0 ou 1"""
+        probs = np.zeros(2)
+        mask = 1 << q
+        for i in range(self.dim):
+            if i & mask:
+                probs[1] += np.abs(self.state[i])**2
+            else:
+                probs[0] += np.abs(self.state[i])**2
+        # Normalizar
+        total = probs[0] + probs[1]
+        if total > 0:
+            probs /= total
+        return 0 if random.random() < probs[0] else 1
+
     def get_probs(self):
         return np.abs(self.state)**2
 
