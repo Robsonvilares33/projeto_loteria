@@ -392,6 +392,7 @@ class PerformanceLearner:
     - Ajusta pesos baseado em resultados reais
     - Aprende quais estratégias funcionam melhor
     - Atualiza continuamente
+    - DETECÇÃO DE NOVOS DADOS: Só recalcula se houver novos sorteios
     """
 
     def __init__(self, lottery_id):
@@ -403,6 +404,7 @@ class PerformanceLearner:
             'balanced': 1.0
         }
         self.history = []
+        self.last_learned_concurso = 0
         self.performance_log = os.path.join(MEMORY_DIR, f"performance_{lottery_id}.json")
         self.load()
 
@@ -414,6 +416,7 @@ class PerformanceLearner:
                     data = json.load(f)
                     self.strategy_weights = data.get('weights', self.strategy_weights)
                     self.history = data.get('history', [])
+                    self.last_learned_concurso = data.get('last_concurso', 0)
             except:
                 pass
 
@@ -424,8 +427,17 @@ class PerformanceLearner:
                 'lottery_id': self.lottery_id,
                 'weights': self.strategy_weights,
                 'history': self.history[-100:],  # Keep last 100
+                'last_concurso': self.last_learned_concurso,
                 'last_update': datetime.now().isoformat()
             }, f, indent=2)
+
+    def has_new_data(self, latest_concurso):
+        """Verifica se há novos dados para aprender"""
+        return latest_concurso > self.last_learned_concurso
+
+    def mark_learned(self, concurso):
+        """Marca que aprendeu com este concurso"""
+        self.last_learned_concurso = concurso
 
     def update_weights(self, backtest_results):
         """

@@ -1,24 +1,26 @@
 #!/usr/bin/env python3
 """
-SIAOL-PRO SMART SCHEDULER v2.0
-==============================
-Sistema inteligente que:
-1. Detecta novos sorteios automaticamente
-2. Só aprende quando há novos dados
-3. Economiza recursos computacionais
-4. Executa ações nos momentos certos
+SIAOL-PRO SMART SCHEDULER v3.0 - APRENDIZADO INTELIGENTE
+=========================================================
+Sistema que:
+1. Detecta SE HÁ NOVOS SORTEIOS para aprender
+2. Sincroniza apenas quando necessário
+3. Executa backtesting apenas quando há novos dados
+4. Otimiza recursos computacionais
 
-CRONOGRAMA OTIMIZADO:
-- Segunda a Sábado: Quina + Lotofácil
-- Quartas e Sábados: Mega-Sena
-- Terças e Quintas: Lotomania
+FLUXO DE APRENDIZADO:
+- Verifica novos resultados da API
+- Se há novos dados → Sincroniza → Aprende → Atualiza pesos
+- Se não há novos dados → Modo espera (não faz nada pesado)
 """
 
 import os, json, time, datetime
 from datetime import datetime as dt
+import requests
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 MEMORY_DIR = os.path.join(PROJECT_DIR, "memory")
+DATA_DIR = os.path.join(PROJECT_DIR, "data")
 os.makedirs(MEMORY_DIR, exist_ok=True)
 
 # Configuração de dias de sorteio
@@ -29,231 +31,218 @@ DRAW_SCHEDULE = {
     3: ['lotofacil', 'quina'],           # Quinta
     4: ['lotofacil', 'quina'],           # Sexta
     5: ['lotofacil', 'megasena', 'quina', 'lotomania'],  # Sábado
-    6: []                                  # Domingo - sem sorteio
+    6: []                                  # Domingo
 }
 
-# Horários (hora brasileira = UTC-3)
-PRE_DRAW_HOUR = 18    # 6PM - gerar jogos
-POST_DRAW_HOUR = 21   # 9PM - buscar resultado
-
-# Arquivo de controle
-LAST_CHECK_FILE = os.path.join(MEMORY_DIR, "smart_scheduler_state.json")
+# Arquivo de controle de aprendizado
+STATE_FILE = os.path.join(MEMORY_DIR, "smart_learning_state.json")
 
 
-class SmartScheduler:
-    """Escalonador inteligente que só executa quando necessário"""
+class SmartLearningScheduler:
+    """Escalonador que só aprende quando há novos dados"""
 
     def __init__(self):
         self.state = self.load_state()
-        self.today = dt.now()
-        self.weekday = self.today.weekday()
-        self.hour = self.today.hour
-        self.minute = self.today.minute
+        self.now = dt.now()
+        self.weekday = self.now.weekday()
+        self.hour = self.now.hour
 
     def load_state(self):
-        """Carrega estado anterior"""
-        if os.path.exists(LAST_CHECK_FILE):
+        """Carrega estado do aprendizado"""
+        if os.path.exists(STATE_FILE):
             try:
-                with open(LAST_CHECK_FILE) as f:
+                with open(STATE_FILE) as f:
                     return json.load(f)
             except:
                 pass
         return {
-            'last_run_date': None,
-            'last_draw_check': {},
-            'last_pre_draw_run': {},
-            'runs_today': 0
+            'last_sync': None,
+            'last_concursos': {},
+            'learning_history': []
         }
 
     def save_state(self):
-        """Salva estado atual"""
-        self.state['last_run_date'] = self.today.strftime('%Y-%m-%d')
-        with open(LAST_CHECK_FILE, 'w') as f:
+        """Salva estado do aprendizado"""
+        with open(STATE_FILE, 'w') as f:
             json.dump(self.state, f, indent=2)
 
-    def is_draw_day(self):
-        """Verifica se hoje é dia de sorteio"""
-        return len(DRAW_SCHEDULE.get(self.weekday, [])) > 0
+    def check_api_for_new_draws(self, lottery):
+        """Checa API da Caixa para novos sorteios"""
+        lottery_codes = {
+            'lotofacil': 'lf',
+            'megasena': 'ms',
+            'quina': 'gn',
+            'lotomania': 'lm'
+        }
 
-    def is_pre_draw_window(self):
-        """Verifica se está na janela pré-sorteio (18h-20h)"""
-        return 18 <= self.hour < 20
+        code = lottery_codes.get(lottery, lottery)
 
-    def is_post_draw_window(self):
-        """Verifica se está na janela pós-sorteio (21h-22h)"""
-        return 21 <= self.hour < 22
+        try:
+            url = f"https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena"
+            if lottery == 'lotofacil':
+                url = "https://servicebus2.caixa.gov.br/portaldeloterias/api/lotofacil"
+            elif lottery == 'quina':
+                url = "https://servicebus2.caixa.gov.br/portaldeloterias/api/quina"
+            elif lottery == 'lotomania':
+                url = "https://servicebus2.caixa.gov.br/portaldeloterias/api/lotomania"
 
-    def should_run_pre_draw(self, lottery):
-        """Verifica se deve rodar antes do sorteio"""
-        today_key = f"{lottery}_pre_{self.today.strftime('%Y%m%d')}"
-        return self.state.get('last_pre_draw_run', {}).get(lottery) != today_key
+            response = requests.get(url, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                latest = data.get('numero', 0)
+                return latest
+        except:
+            pass
 
-    def should_check_results(self):
-        """Verifica se deve checar novos resultados"""
-        today_key = self.today.strftime('%Y%m%d')
-        return self.state.get('last_draw_check', {}) != today_key
+        # Fallback: checar último concurso known
+        return self.state.get('last_concursos', {}).get(lottery, 0)
 
-    def mark_pre_draw_done(self, lottery):
-        """Marca que pré-sorteio foi executado"""
-        if 'last_pre_draw_run' not in self.state:
-            self.state['last_pre_draw_run'] = {}
-        today_key = f"{lottery}_pre_{self.today.strftime('%Y%m%d')}"
-        self.state['last_pre_draw_run'][lottery] = today_key
+    def has_new_data(self, lottery):
+        """Verifica se há novos dados para a lottery"""
+        current_concurso = self.check_api_for_new_draws(lottery)
+        last_known = self.state.get('last_concursos', {}).get(lottery, 0)
 
-    def mark_results_checked(self):
-        """Marca que checou resultados hoje"""
-        self.state['last_draw_check'] = self.today.strftime('%Y%m%d')
-        self.state['runs_today'] += 1
+        return current_concurso > last_known
 
-    def reset_daily_state(self):
-        """Reseta estado para novo dia"""
-        if self.state.get('last_run_date') != self.today.strftime('%Y-%m-%d'):
-            self.state = {
-                'last_run_date': self.today.strftime('%Y-%m-%d'),
-                'last_draw_check': {},
-                'last_pre_draw_run': {},
-                'runs_today': 0
-            }
+    def run_full_learning_cycle(self, lottery):
+        """Executa ciclo completo de aprendizado para uma lottery"""
+        print(f"\n   🧠 Aprendendo {lottery}...")
 
-    def get_today_lotteries(self):
-        """Retorna loterias do dia"""
-        return DRAW_SCHEDULE.get(self.weekday, [])
+        try:
+            # 1. Sincronizar dados
+            print(f"      📥 Sincronizando resultados...")
+            os.system(f"cd {PROJECT_DIR} && python3 siaol_complete_database.py --sync > /dev/null 2>&1")
+
+            # 2. Obter novo concurso
+            current = self.check_api_for_new_draws(lottery)
+            if current > self.state.get('last_concursos', {}).get(lottery, 0):
+                print(f"      ✅ Novo concurso detectado: {current}")
+
+                # 3. Executar backtesting e atualizar pesos
+                print(f"      📊 Atualizando pesos e estratégia...")
+                os.system(f"cd {PROJECT_DIR} && python3 siaol_multi_portfolio.py > /dev/null 2>&1")
+
+                # 4. Marcar como aprendido
+                if 'last_concursos' not in self.state:
+                    self.state['last_concursos'] = {}
+                self.state['last_concursos'][lottery] = current
+
+                # 5. Registrar no histórico
+                self.state['learning_history'].append({
+                    'timestamp': dt.now().isoformat(),
+                    'lottery': lottery,
+                    'concurso': current,
+                    'action': 'learned'
+                })
+                self.state['learning_history'] = self.state['learning_history'][-50:]
+
+                print(f"      ✅ Aprendizado completo!")
+                return True
+            else:
+                print(f"      💤 Sem novos dados - nada a aprender")
+                return False
+
+        except Exception as e:
+            print(f"      ❌ Erro: {e}")
+            return False
+
+    def run_idle_mode(self):
+        """Modo espera - não faz nada pesado"""
+        print(f"\n   💤 Modo espera ativo")
+        print(f"      Próximo sorteio: {self.get_next_draw_info()}")
+        print(f"      Executará aprendizado quando novo resultado estiver disponível")
+
+    def get_next_draw_info(self):
+        """Retorna info do próximo sorteio"""
+        for i in range(1, 8):
+            next_day = (self.weekday + i) % 7
+            if DRAW_SCHEDULE.get(next_day):
+                next_date = self.now + datetime.timedelta(days=i)
+                days = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom']
+                lotteries = ', '.join(DRAW_SCHEDULE[next_day])
+                return f"{days[next_day]} ({next_date.strftime('%d/%m')}) - {lotteries}"
+        return "N/A"
 
     def determine_action(self):
-        """
-        Determina qual ação deve executar
-        Retorna: (should_run, action_type, lotteries)
-        """
-        self.reset_daily_state()
+        """Determina o que fazer"""
+        # Verificar loterias do dia
+        today_lotteries = DRAW_SCHEDULE.get(self.weekday, [])
 
-        # Verificar se é dia de sorteio
-        if not self.is_draw_day():
-            return False, "no_draw_day", []
+        if not today_lotteries:
+            return "idle", []
 
-        lotteries = self.get_today_lotteries()
+        # Verificar se há novos dados
+        new_data_available = []
+        for lottery in today_lotteries:
+            if self.has_new_data(lottery):
+                new_data_available.append(lottery)
 
-        # Janela pós-sorteio (21h-22h) - checar resultados
-        if self.is_post_draw_window():
-            return True, "check_results", lotteries
+        if new_data_available:
+            return "learn", new_data_available
 
-        # Janela pré-sorteio (18h-20h) - gerar jogos
-        if self.is_pre_draw_window():
-            pending = [l for l in lotteries if self.should_run_pre_draw(l)]
-            if pending:
-                return True, "pre_draw", pending
+        # Se é horário de pós-sorteio (21h-22h) e ainda não sincronizou hoje
+        if 21 <= self.hour < 23:
+            return "sync_check", today_lotteries
 
-        # Não há ação necessária
-        return False, "nothing_to_do", []
-
-
-def run_pre_draw_analysis(lotteries):
-    """Executa análise pré-sorteio"""
-    print("\n" + "="*60)
-    print("🎯 ANÁLISE PRÉ-SORTEIO")
-    print(f"   Data: {dt.now().strftime('%d/%m/%Y %H:%M')}")
-    print(f"   Loterias: {', '.join(lotteries)}")
-    print("="*60)
-
-    # Importar módulos
-    try:
-        import sys
-        sys.path.insert(0, PROJECT_DIR)
-
-        # Executar análise de portfólios
-        print("\n📊 Executando análise de portfólios...")
-        os.system(f"cd {PROJECT_DIR} && python3 siaol_multi_portfolio.py > /dev/null 2>&1")
-
-        print("✅ Análise pré-sorteio concluída")
-        return True
-
-    except Exception as e:
-        print(f"❌ Erro: {e}")
-        return False
-
-
-def run_post_draw_check(lotteries):
-    """Checa e atualiza resultados"""
-    print("\n" + "="*60)
-    print("🔍 CHECAGEM PÓS-SORTEIO")
-    print(f"   Data: {dt.now().strftime('%d/%m/%Y %H:%M')}")
-    print(f"   Loterias: {', '.join(lotteries)}")
-    print("="*60)
-
-    try:
-        # Executar sync de banco de dados
-        print("\n📥 Sincronizando novos resultados...")
-        os.system(f"cd {PROJECT_DIR} && python3 siaol_complete_database.py --sync > /dev/null 2>&1")
-
-        # Executar learning cycle
-        print("🧠 Executando ciclo de aprendizado...")
-        os.system(f"cd {PROJECT_DIR} && python3 siaol_multi_portfolio.py > /dev/null 2>&1")
-
-        print("✅ Resultados sincronizados e aprendizados")
-        return True
-
-    except Exception as e:
-        print(f"❌ Erro: {e}")
-        return False
-
-
-def run_idle_check():
-    """Verificação leve em horário ocioso"""
-    # Apenas atualiza estatísticas, não faz процес heavy
-    now = dt.now()
-    print(f"[{now.strftime('%H:%M')}] Sistema em modo espera...")
-    print("   💤 Aguardando horário de sorteio...")
+        return "idle", []
 
 
 def main():
     print("""
 ╔═══════════════════════════════════════════════════════════╗
-║  🧠 SIAOL-PRO SMART SCHEDULER v2.0                         ║
-║  Execução Inteligente - Aprende apenas quando necessário  ║
+║  🧠 SIAOL-PRO SMART SCHEDULER v3.0                        ║
+║  Aprendizado Inteligente - Só aprende quando há novos dados║
 ╚═══════════════════════════════════════════════════════════╝
     """)
 
-    scheduler = SmartScheduler()
+    scheduler = SmartLearningScheduler()
+
+    # Mostrar status
+    print(f"\n📅 Hoje: {scheduler.now.strftime('%A, %d/%m/%Y')}")
+    print(f"🕐 Horário: {scheduler.now.strftime('%H:%M')}")
+
+    today_lotteries = DRAW_SCHEDULE.get(scheduler.weekday, [])
+    if today_lotteries:
+        print(f"🎰 Loterias hoje: {', '.join(today_lotteries)}")
+    else:
+        print(f"🎰 Hoje não há sorteios")
 
     # Determinar ação
-    should_run, action_type, lotteries = scheduler.determine_action()
+    action, lotteries = scheduler.determine_action()
 
-    print(f"\n📅 Hoje ({scheduler.weekday}): ", end="")
-    if scheduler.is_draw_day():
-        print(f"Dia de sorteio - {', '.join(lotteries)}")
-    else:
-        print("Sem sorteio")
+    print(f"\n🔍 Verificando necessidade de aprendizado...")
 
-    print(f"🕐 Horário: {scheduler.hour:02d}:{scheduler.minute:02d}")
-    print(f"📊 Ações hoje: {scheduler.state.get('runs_today', 0)}")
+    if action == "learn":
+        print(f"\n🚀 EXECUTANDO CICLO DE APRENDIZADO")
+        print(f"   Loterias com novos dados: {', '.join(lotteries)}")
 
-    if not should_run:
-        if action_type == "no_draw_day":
-            print("\n⏸️  Modo espera: Não há sorteios hoje")
+        learned_count = 0
+        for lottery in lotteries:
+            if scheduler.run_full_learning_cycle(lottery):
+                learned_count += 1
+
+        print(f"\n   ✅ Aprendizado concluído: {learned_count}/{len(lotteries)}")
+
+    elif action == "sync_check":
+        print(f"\n🔄 Verificando sincronização...")
+        # Forçar sync uma vez
+        for lottery in lotteries:
+            if scheduler.has_new_data(lottery):
+                scheduler.run_full_learning_cycle(lottery)
+                break
         else:
-            print("\n⏸️  Modo espera: Ações já foram executadas hoje")
-        run_idle_check()
-        scheduler.save_state()
-        return 0
+            scheduler.run_idle_mode()
 
-    # Executar ação apropriada
-    if action_type == "pre_draw":
-        print(f"\n🚀 EXECUTANDO: Análise pré-sorteio para {', '.join(lotteries)}")
-        success = run_pre_draw_analysis(lotteries)
-        if success:
-            for lot in lotteries:
-                scheduler.mark_pre_draw_done(lot)
+    else:
+        scheduler.run_idle_mode()
 
-    elif action_type == "check_results":
-        print(f"\n🚀 EXECUTANDO: Checagem pós-sorteio para {', '.join(lotteries)}")
-        success = run_post_draw_check(lotteries)
-        if success:
-            scheduler.mark_results_checked()
-
+    # Salvar estado
     scheduler.save_state()
+    scheduler.state['last_sync'] = scheduler.now.isoformat()
 
     print("\n" + "="*60)
     print("✅ Ciclo inteligente concluído")
-    print(f"   Próxima execução: Quando houver ação necessária")
+    print(f"   Próximo aprendizado: Quando houver novos resultados")
     print("="*60)
 
     return 0

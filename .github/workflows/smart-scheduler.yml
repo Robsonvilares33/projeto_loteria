@@ -1,13 +1,14 @@
-name: SIAOL-PRO SMART SCHEDULER
+name: SIAOL-PRO SMART LEARNING SCHEDULER
 
 on:
   schedule:
     # A cada 30 minutos - sistema decide se executa ou não
+    # Apenas aprende quando há NOVOS SORTEIOS
     - cron: '*/30 * * * *'
   workflow_dispatch:
 
 jobs:
-  run-smart-scheduler:
+  run-smart-learning:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
@@ -17,7 +18,7 @@ jobs:
       GROQ_API_KEY: ${{ secrets.AICOUNCIL }}
 
     steps:
-      - name: Checkout with LFS
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           lfs: false
@@ -36,17 +37,17 @@ jobs:
           mkdir -p output
           mkdir -p data
 
-      - name: Run Smart Scheduler
+      - name: Run Smart Learning Scheduler v3.0
         run: |
           echo ""
           echo "╔═══════════════════════════════════════════════════════════╗"
-          echo "║  🧠 SIAOL-PRO SMART SCHEDULER v2.0                        ║"
-          echo "║  Execução Inteligente - Só roda quando necessário        ║"
+          echo "║  🧠 SMART LEARNING SCHEDULER v3.0                       ║"
+          echo "║  Aprendizado Inteligente - Só aprende quando há novos dados║"
           echo "╚═══════════════════════════════════════════════════════════╝"
           echo ""
           python3 siaol_smart_scheduler.py
           echo ""
-          echo "✅ Smart Scheduler executado"
+          echo "✅ Smart Learning executado"
 
       - name: Upload Memory
         uses: actions/upload-artifact@v4
@@ -56,4 +57,7 @@ jobs:
             memory/
             output/
             data/*.json
+            memory/smart_learning_state.json
+            memory/performance_*.json
+            memory/portfolio_*.json
           retention-days: 2
