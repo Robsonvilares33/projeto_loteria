@@ -59,6 +59,18 @@ jobs:
           echo ""
           echo "✅ Lotofácil Portfolio executado com sucesso"
 
+      - name: Run MULTI-LOTTERY PORTFOLIO v2.0 - Backtesting + Aprendizado
+        run: |
+          echo ""
+          echo "╔═══════════════════════════════════════════════════════════╗"
+          echo "║  🧠 MULTI-LOTTERY PORTFOLIO v2.0                        ║"
+          echo "║  Backtesting + Aprendizado + Grupo de Controle         ║"
+          echo "╚═══════════════════════════════════════════════════════════╝"
+          echo ""
+          python3 siaol_multi_portfolio.py
+          echo ""
+          echo "✅ Multi-Lottery Portfolio executado com sucesso"
+
       - name: Run AI COUNCIL - Conselho de IAs em Diálogo
         run: |
           echo ""
@@ -78,4 +90,7 @@ jobs:
             memory/
             output/
             data/*.json
+            memory/portfolio_*.json
+            memory/performance_*.json
+            memory/control_group_*.json
           retention-days: 1
