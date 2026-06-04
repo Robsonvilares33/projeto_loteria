@@ -1,0 +1,59 @@
+name: SIAOL-PRO SMART SCHEDULER
+
+on:
+  schedule:
+    # A cada 30 minutos - sistema decide se executa ou não
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  run-smart-scheduler:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      GROQ_API_KEY: ${{ secrets.AICOUNCIL }}
+
+    steps:
+      - name: Checkout with LFS
+        uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests numpy pandas openpyxl
+
+      - name: Create directories
+        run: |
+          mkdir -p memory
+          mkdir -p output
+          mkdir -p data
+
+      - name: Run Smart Scheduler
+        run: |
+          echo ""
+          echo "╔═══════════════════════════════════════════════════════════╗"
+          echo "║  🧠 SIAOL-PRO SMART SCHEDULER v2.0                        ║"
+          echo "║  Execução Inteligente - Só roda quando necessário        ║"
+          echo "╚═══════════════════════════════════════════════════════════╝"
+          echo ""
+          python3 siaol_smart_scheduler.py
+          echo ""
+          echo "✅ Smart Scheduler executado"
+
+      - name: Upload Memory
+        uses: actions/upload-artifact@v4
+        with:
+          name: memory-${{ github.run_number }}
+          path: |
+            memory/
+            output/
+            data/*.json
+          retention-days: 2
