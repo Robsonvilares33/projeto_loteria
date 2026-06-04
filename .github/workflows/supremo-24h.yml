@@ -28,12 +28,13 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests numpy
+        run: pip install requests numpy pandas openpyxl
 
       - name: Create directories
         run: |
           mkdir -p memory
           mkdir -p output
+          mkdir -p data
 
       - name: Verify Telegram Config
         run: |
@@ -46,6 +47,17 @@ jobs:
 
       - name: Sync Complete Database
         run: python3 siaol_complete_database.py --sync
+
+      - name: Run LOTOFÁCIL PORTFOLIO - Cercamento Estratégico
+        run: |
+          echo ""
+          echo "╔═══════════════════════════════════════════════════════════╗"
+          echo "║  🎯 LOTOFÁCIL PORTFOLIO - CERCAMENTO ESTRATÉGICO       ║"
+          echo "╚═══════════════════════════════════════════════════════════╝"
+          echo ""
+          python3 siaol_lotofacil_portfolio.py
+          echo ""
+          echo "✅ Lotofácil Portfolio executado com sucesso"
 
       - name: Run AI COUNCIL - Conselho de IAs em Diálogo
         run: |
@@ -65,4 +77,5 @@ jobs:
           path: |
             memory/
             output/
+            data/*.json
           retention-days: 1
