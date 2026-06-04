@@ -41,6 +41,16 @@
 - Diálogo colaborativo
 - Previsões integradas
 
+### 5. siaol_lotofacil_portfolio.py
+**Sistema de Cercamento Estratégico Lotofácil**
+- Carrega histórico completo do Excel (3.702 concursos)
+- Análise de frequência (quentes/frios)
+- Análise de atrasos e co-ocorrências
+- Geração de portfólios com 33 jogos
+- 4 estratégias: Balanceado, Quentes, Atrasados, Ótimo
+- Cálculo de cobertura percentual
+- Baseado nos arquivos do usuário: Lotofácil.xlsx
+
 ---
 
 ## 📊 LOTERIAS SUPORTADAS
@@ -118,8 +128,9 @@ com N números escolhidos
 - Passos:
   1. Executa siaol_pro_supremo_max_v4.py
   2. Sincroniza banco de dados (siaol_complete_database.py --sync)
-  3. Executa AI Council (siaol_ai_council.py)
-  4. Salva memória e outputs
+  3. Executa Lotofácil Portfolio (siaol_lotofacil_portfolio.py)
+  4. Executa AI Council (siaol_ai_council.py)
+  5. Salva memória e outputs
 
 ---
 
@@ -136,6 +147,9 @@ python3 siaol_complete_database.py --sync
 # Gerador de jogos
 python3 siaol_game_generator.py --lottery megasena --report
 python3 siaol_game_generator.py --lottery quina --coverage 10 --budget 200
+
+# Lotofácil Portfolio (Cercamento Estratégico)
+python3 siaol_lotofacil_portfolio.py
 
 # AI Council
 python3 siaol_ai_council.py
@@ -166,6 +180,13 @@ python3 siaol_ai_council.py
    - Todas as loterias processadas ✓
    - Jogos únicos gerados: 19-22 por loteria ✓
    - Evolução registrada ✓
+
+4. **siaol_lotofacil_portfolio.py**
+   - 3.702 concursos carregados do Excel ✓
+   - 4 portfólios gerados com 33 jogos cada ✓
+   - Cercamento Balanceado, Quentes, Atrasados, Ótimo ✓
+   - Números sem duplicatas ✓
+   - Cobertura calculada ✓
 
 ---
 
