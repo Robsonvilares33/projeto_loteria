@@ -1,0 +1,439 @@
+{
+  "contest": 7051,
+  "prize": "R$ 250.000.000",
+  "draw_date": "2026-06-28T11:00:00",
+  "generated_at": "2026-06-06T01:49:28.656563",
+  "days_until_draw": 22,
+  "budget": 150.0,
+  "total_games": 34,
+  "total_cost": 102.0,
+  "hot_numbers": [
+    12,
+    15,
+    16,
+    67,
+    80
+  ],
+  "cold_numbers": [
+    12,
+    15,
+    16,
+    67,
+    80
+  ],
+  "dezenas": {
+    "1": 3,
+    "6": 1,
+    "7": 1
+  },
+  "portfolio": [
+    {
+      "id": 1,
+      "numbers": [
+        12,
+        15,
+        16,
+        67,
+        80
+      ],
+      "strategy": "🔥 HOT FOCUS",
+      "cost": 3.0
+    },
+    {
+      "id": 2,
+      "numbers": [
+        12,
+        15,
+        16,
+        67,
+        80
+      ],
+      "strategy": "🔥 HOT FOCUS",
+      "cost": 3.0
+    },
+    {
+      "id": 3,
+      "numbers": [
+        12,
+        15,
+        16,
+        67,
+        80
+      ],
+      "strategy": "🔥 HOT FOCUS",
+      "cost": 3.0
+    },
+    {
+      "id": 4,
+      "numbers": [
+        12,
+        15,
+        16,
+        67,
+        80
+      ],
+      "strategy": "🔥 HOT FOCUS",
+      "cost": 3.0
+    },
+    {
+      "id": 5,
+      "numbers": [
+        12,
+        15,
+        16,
+        67,
+        80
+      ],
+      "strategy": "🔥 HOT FOCUS",
+      "cost": 3.0
+    },
+    {
+      "id": 6,
+      "numbers": [
+        12,
+        15,
+        16,
+        67,
+        80
+      ],
+      "strategy": "🔥 HOT FOCUS",
+      "cost": 3.0
+    },
+    {
+      "id": 7,
+      "numbers": [
+        12,
+        15,
+        16,
+        67,
+        80
+      ],
+      "strategy": "🔥 HOT FOCUS",
+      "cost": 3.0
+    },
+    {
+      "id": 8,
+      "numbers": [
+        12,
+        15,
+        16,
+        67,
+        80
+      ],
+      "strategy": "🔥 HOT FOCUS",
+      "cost": 3.0
+    },
+    {
+      "id": 9,
+      "numbers": [
+        12,
+        15,
+        16,
+        67,
+        80
+      ],
+      "strategy": "🔥 HOT FOCUS",
+      "cost": 3.0
+    },
+    {
+      "id": 10,
+      "numbers": [
+        12,
+        15,
+        16,
+        67,
+        80
+      ],
+      "strategy": "🔥 HOT FOCUS",
+      "cost": 3.0
+    },
+    {
+      "id": 11,
+      "numbers": [
+        1,
+        4,
+        8,
+        12,
+        15
+      ],
+      "strategy": "🧠 QUANTUM WALK",
+      "cost": 3.0
+    },
+    {
+      "id": 12,
+      "numbers": [
+        1,
+        5,
+        8,
+        12,
+        15
+      ],
+      "strategy": "🧠 QUANTUM WALK",
+      "cost": 3.0
+    },
+    {
+      "id": 13,
+      "numbers": [
+        1,
+        4,
+        8,
+        12,
+        15
+      ],
+      "strategy": "🧠 QUANTUM WALK",
+      "cost": 3.0
+    },
+    {
+      "id": 14,
+      "numbers": [
+        1,
+        5,
+        12,
+        15,
+        16
+      ],
+      "strategy": "🧠 QUANTUM WALK",
+      "cost": 3.0
+    },
+    {
+      "id": 15,
+      "numbers": [
+        1,
+        5,
+        8,
+        12,
+        15
+      ],
+      "strategy": "🧠 QUANTUM WALK",
+      "cost": 3.0
+    },
+    {
+      "id": 16,
+      "numbers": [
+        1,
+        5,
+        12,
+        15,
+        16
+      ],
+      "strategy": "🧠 QUANTUM WALK",
+      "cost": 3.0
+    },
+    {
+      "id": 17,
+      "numbers": [
+        1,
+        5,
+        6,
+        12,
+        15
+      ],
+      "strategy": "🧠 QUANTUM WALK",
+      "cost": 3.0
+    },
+    {
+      "id": 18,
+      "numbers": [
+        4,
+        5,
+        8,
+        12,
+        15
+      ],
+      "strategy": "🧠 QUANTUM WALK",
+      "cost": 3.0
+    },
+    {
+      "id": 19,
+      "numbers": [
+        4,
+        7,
+        8,
+        12,
+        15
+      ],
+      "strategy": "🧠 QUANTUM WALK",
+      "cost": 3.0
+    },
+    {
+      "id": 20,
+      "numbers": [
+        1,
+        2,
+        3,
+        5,
+        12
+      ],
+      "strategy": "🧠 QUANTUM WALK",
+      "cost": 3.0
+    },
+    {
+      "id": 21,
+      "numbers": [
+        1,
+        2,
+        5,
+        6,
+        12
+      ],
+      "strategy": "⚡ ENTANGLEMENT",
+      "cost": 3.0
+    },
+    {
+      "id": 22,
+      "numbers": [
+        1,
+        2,
+        6,
+        12,
+        15
+      ],
+      "strategy": "⚡ ENTANGLEMENT",
+      "cost": 3.0
+    },
+    {
+      "id": 23,
+      "numbers": [
+        1,
+        2,
+        4,
+        12,
+        15
+      ],
+      "strategy": "⚡ ENTANGLEMENT",
+      "cost": 3.0
+    },
+    {
+      "id": 24,
+      "numbers": [
+        1,
+        2,
+        3,
+        6,
+        12
+      ],
+      "strategy": "⚡ ENTANGLEMENT",
+      "cost": 3.0
+    },
+    {
+      "id": 25,
+      "numbers": [
+        1,
+        2,
+        4,
+        7,
+        8
+      ],
+      "strategy": "⚡ ENTANGLEMENT",
+      "cost": 3.0
+    },
+    {
+      "id": 26,
+      "numbers": [
+        1,
+        5,
+        6,
+        8,
+        12
+      ],
+      "strategy": "⚡ ENTANGLEMENT",
+      "cost": 3.0
+    },
+    {
+      "id": 27,
+      "numbers": [
+        1,
+        2,
+        3,
+        12,
+        15
+      ],
+      "strategy": "⚡ ENTANGLEMENT",
+      "cost": 3.0
+    },
+    {
+      "id": 28,
+      "numbers": [
+        2,
+        3,
+        5,
+        6,
+        8
+      ],
+      "strategy": "🎯 BALANCED",
+      "cost": 3.0
+    },
+    {
+      "id": 29,
+      "numbers": [
+        1,
+        2,
+        6,
+        12,
+        15
+      ],
+      "strategy": "🎯 BALANCED",
+      "cost": 3.0
+    },
+    {
+      "id": 30,
+      "numbers": [
+        2,
+        3,
+        8,
+        12,
+        15
+      ],
+      "strategy": "🎯 BALANCED",
+      "cost": 3.0
+    },
+    {
+      "id": 31,
+      "numbers": [
+        3,
+        8,
+        12,
+        15,
+        16
+      ],
+      "strategy": "🎯 BALANCED",
+      "cost": 3.0
+    },
+    {
+      "id": 32,
+      "numbers": [
+        1,
+        4,
+        6,
+        7,
+        8
+      ],
+      "strategy": "🎯 BALANCED",
+      "cost": 3.0
+    },
+    {
+      "id": 33,
+      "numbers": [
+        1,
+        3,
+        7,
+        8,
+        12
+      ],
+      "strategy": "🎯 BALANCED",
+      "cost": 3.0
+    },
+    {
+      "id": 34,
+      "numbers": [
+        3,
+        4,
+        5,
+        6,
+        12
+      ],
+      "strategy": "🎯 BALANCED",
+      "cost": 3.0
+    }
+  ]
+}

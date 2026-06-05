@@ -1,0 +1,439 @@
+name: "🧠 QUINA BRAIN - CEREBRO QUÂNTICO"
+
+on:
+  schedule:
+    # Run every 6 hours for continuous learning
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      strategy:
+        description: 'Strategy (all, hot, quantum, balanced)'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - hot
+          - quantum
+          - balanced
+      force_telegram:
+        description: 'Force Telegram send'
+        required: false
+        type: boolean
+        default: false
+  # Run on push to learn from changes
+  push:
+    branches:
+      - main
+    paths:
+      - 'quina_sao_joao/**'
+      - 'quantum_simulator_20_qubits.py'
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  quina-brain:
+    name: "🧠 Quina Brain Analysis"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # ============================================
+      # SETUP
+      # ============================================
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: false
+          path: 'projeto_loteria'
+          sparse-checkout: |
+            quantum_simulator_20_qubits.py
+            quantum_v4_optimized.py
+            data/quina.json
+            quina_sao_joao
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Create directories
+        run: |
+          mkdir -p projeto_loteria/quina_sao_joao/output
+          mkdir -p projeto_loteria/quina_sao_joao/memory
+          mkdir -p projeto_loteria/quina_sao_joao/data
+          mkdir -p projeto_loteria/output
+          mkdir -p projeto_loteria/memory
+
+      # ============================================
+      # UPDATE QUINA DATA
+      # ============================================
+      - name: "📡 Fetch Latest Quina Data"
+        run: |
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║           📡 ATUALIZANDO DADOS DA QUINA                        ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
+
+          # Try to fetch from API
+          python3 << 'EOF'
+import requests
+import json
+import os
+
+try:
+    # Try Caixa API
+    response = requests.get(
+        "https://loterias.caixa.gov.br/api/max Quina",
+        timeout=10,
+        headers={'User-Agent': 'Mozilla/5.0'}
+    )
+
+    if response.status_code == 200:
+        data = response.json()
+        if data:
+            quina_data = {
+                "ultimo_concurso": data.get("concurso", 0),
+                "data": data.get("data", ""),
+                "numeros_sorteados": data.get("listaNumeros", []),
+                "premiacao": data.get("premiacao", {})
+            }
+
+            # Save to file
+            filepath = "projeto_loteria/data/quina.json"
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(quina_data, f, indent=2, ensure_ascii=False)
+
+            print(f"✅ Dados atualizados: Concurso {quina_data['ultimo_concurso']}")
+            print(f"   Números: {quina_data['numeros_sorteados']}")
+        else:
+            print("⚠️ API retornou dados vazios")
+    else:
+        print(f"⚠️ API retornou status: {response.status_code}")
+        raise Exception("API Error")
+
+except Exception as e:
+    print(f"⚠️ Falha na API: {e}")
+    print("📋 Usando dados locais existentes")
+
+    # Check if local data exists
+    if os.path.exists("projeto_loteria/data/quina.json"):
+        with open("projeto_loteria/data/quina.json", 'r') as f:
+            local = json.load(f)
+        print(f"   📊 Dados locais: Concurso {local.get('ultimo_concurso', 'N/A')}")
+    else:
+        print("   ⚠️ Sem dados locais")
+EOF
+
+      # ============================================
+      # QUINA BRAIN EXECUTION
+      # ============================================
+      - name: "🧠 Execute Quina Brain Engine"
+        run: |
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║           🧠 QUINA BRAIN - CEREBRO QUÂNTICO                  ║"
+          echo "║                                                              ║"
+          echo "║           Quina de São João - Concurso 7051                  ║"
+          echo "║           Prêmio: R\$ 250.000.000                             ║"
+          echo "║           Data: 28/06/2026                                    ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
+
+          cd projeto_loteria/quina_sao_joao
+          python3 quina_brain_engine.py
+
+      # ============================================
+      # UPDATE MEMORY FOR LEARNING
+      # ============================================
+      - name: "📊 Update Learning Memory"
+        run: |
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║           📊 ATUALIZANDO MEMÓRIA DE APRENDIZADO              ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
+
+          python3 << 'EOF'
+import json
+import os
+from datetime import datetime
+from collections import Counter
+
+print("📚 Analisando histórico de jogos gerados...")
+
+memory_file = "projeto_loteria/quina_sao_joao/memory/learning_history.json"
+
+# Load or create learning history
+if os.path.exists(memory_file):
+    with open(memory_file, 'r') as f:
+        history = json.load(f)
+else:
+    history = {
+        "total_generations": 0,
+        "all_games": [],
+        "hot_numbers_tracking": [],
+        "strategy_performance": {},
+        "last_update": datetime.now().isoformat()
+    }
+
+# Check for latest generated portfolio
+output_files = sorted([
+    f for f in os.listdir("projeto_loteria/quina_sao_joao/output")
+    if f.startswith("quina_sj_") and f.endswith(".json")
+], reverse=True)
+
+if output_files:
+    latest = output_files[0]
+    with open(f"projeto_loteria/quina_sao_joao/output/{latest}", 'r') as f:
+        data = json.load(f)
+
+    # Update history
+    history["total_generations"] += 1
+    history["all_games"].extend([
+        {"numbers": g["numbers"], "strategy": g["strategy"]}
+        for g in data.get("portfolio", [])
+    ])
+    history["last_update"] = datetime.now().isoformat()
+    history["last_generation"] = latest
+
+    # Track hot numbers from all generations
+    all_nums = [n for g in history["all_games"] for n in g["numbers"]]
+    hot_tracking = Counter(all_nums).most_common(20)
+    history["hot_numbers_tracking"] = [
+        {"number": n, "count": c, "percentage": c / len(all_nums) * 100 if all_nums else 0}
+        for n, c in hot_tracking
+    ]
+
+    # Track strategy usage
+    for game in data.get("portfolio", []):
+        strategy = game.get("strategy", "UNKNOWN")
+        history["strategy_performance"][strategy] = \
+            history["strategy_performance"].get(strategy, 0) + 1
+
+    print(f"✅ Gerações totais: {history['total_generations']}")
+    print(f"✅ Jogos totais gerados: {len(history['all_games'])}")
+    print(f"✅ Estratégias: {list(history['strategy_performance'].keys())}")
+
+# Save updated history
+with open(memory_file, 'w', encoding='utf-8') as f:
+    json.dump(history, f, indent=2, ensure_ascii=False)
+
+print(f"💾 Memória atualizada: {memory_file}")
+EOF
+
+      # ============================================
+      # CHECK DRAW RESULTS (if contest happened)
+      # ============================================
+      - name: "🎯 Check Last Draw Results"
+        run: |
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║           🎯 VERIFICANDO RESULTADOS DO SORTEIO               ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
+
+          python3 << 'EOF'
+import json
+import os
+
+# Load current data
+data_file = "projeto_loteria/data/quina.json"
+if not os.path.exists(data_file):
+    print("⚠️ Sem dados para verificar")
+    exit(0)
+
+with open(data_file, 'r') as f:
+    quina_data = json.load(f)
+
+last_contest = quina_data.get("ultimo_concurso", 0)
+last_numbers = quina_data.get("numeros_sorteados", [])
+last_date = quina_data.get("data", "")
+
+print(f"📊 Último concurso: {last_contest}")
+print(f"📅 Data: {last_date}")
+print(f"🔢 Números: {last_numbers}")
+
+# Check against generated portfolios
+output_dir = "projeto_loteria/quina_sao_joao/output"
+if os.path.exists(output_dir):
+    best_match = {"contest": 0, "match": 0, "file": ""}
+
+    for f in os.listdir(output_dir):
+        if f.startswith("quina_sj_") and f.endswith(".json"):
+            filepath = os.path.join(output_dir, f)
+            with open(filepath, 'r') as file:
+                data = json.load(file)
+
+            # Check each game
+            for game in data.get("portfolio", []):
+                game_nums = set(game["numbers"])
+                result_nums = set(last_numbers)
+                matches = len(game_nums.intersection(result_nums))
+
+                if matches > best_match["match"]:
+                    best_match = {
+                        "contest": data.get("contest", "N/A"),
+                        "match": matches,
+                        "file": f,
+                        "strategy": game.get("strategy", "N/A")
+                    }
+
+    if best_match["match"] > 0:
+        print(f"\n🎯 MELHOR ACERTO:")
+        print(f"   • {best_match['match']} números ({best_match['strategy']})")
+        print(f"   • Arquivo: {best_match['file']}")
+
+        # Save to results history
+        results_file = "projeto_loteria/quina_sao_joao/memory/draw_results.json"
+        if os.path.exists(results_file):
+            with open(results_file, 'r') as f:
+                results = json.load(f)
+        else:
+            results = {"draws": []}
+
+        results["draws"].append({
+            "contest": last_contest,
+            "date": last_date,
+            "numbers": last_numbers,
+            "best_match": best_match["match"],
+            "best_strategy": best_match["strategy"],
+            "timestamp": datetime.now().isoformat()
+        })
+
+        # Keep only last 20 draws
+        results["draws"] = results["draws"][-20:]
+
+        with open(results_file, 'w') as f:
+            json.dump(results, f, indent=2)
+
+        print(f"💾 Resultado salvo!")
+    else:
+        print(f"\n⚠️ Nenhum jogo gerado correspondeu")
+EOF
+
+      # ============================================
+      # TELEGRAM NOTIFICATION
+      # ============================================
+      - name: "📱 Send to Telegram"
+        if: github.event.inputs.force_telegram == 'true' || contains(github.event.schedule, '18:00')
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "⚠️ Telegram credentials not configured"
+            exit 0
+          fi
+
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║           📱 ENVIANDO PARA TELEGRAM                          ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
+
+          # Get latest portfolio
+          python3 << 'EOF'
+import json
+import os
+import requests
+from datetime import datetime
+
+memory_file = "projeto_loteria/quina_sao_joao/memory/quina_brain_latest.json"
+if not os.path.exists(memory_file):
+    print("⚠️ Sem portfólio para enviar")
+    exit(0)
+
+with open(memory_file, 'r') as f:
+    data = json.load(f)
+
+# Build message
+msg = f"""🧠 *QUINA BRAIN - CEREBRO QUÂNTICO*
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 *Concurso 7051*
+📅 28/06/2026 às 11h00
+💰 *R$ 250.000.000*
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔥 *HOT NUMBERS ATUALIZADOS:*
+{', '.join(str(n) for n in data.get('hot_numbers', [])[:15])}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎰 *PORTFÓLIO GERADO*
+({data.get('total_games', 0)} jogos)
+
+"""
+
+for i, game in enumerate(data.get('portfolio', [])[:10], 1):
+    nums = ' - '.join(f"*{n}*\" for n in game['numbers'])
+    strategy = game.get('strategy', '')
+    msg += f"{i}. {nums} [{strategy}]\n"
+
+if data.get('total_games', 0) > 10:
+    msg += f"\n... e mais {data.get('total_games', 0) - 10} jogos!"
+
+msg += f"""
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💵 *Custo: R$ {data.get('total_cost', 0):.2f}*
+📊 *Gerações: {data.get('generations', 1)}*
+🧠 *SIAOL-PRO Quantum Brain*
+
+_Atualizado: {datetime.now().strftime('%d/%m/%Y %H:%M')}_
+"""
+
+# Save message to temp file for next step
+with open("/tmp/telegram_msg.txt", 'w') as f:
+    f.write(msg)
+
+print("📝 Mensagem preparada!")
+print(msg[:500] + "...")
+EOF
+
+          # Send via curl
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            -d text="$(cat /tmp/telegram_msg.txt)" \
+            -d parse_mode="Markdown" \
+            | python3 -c "import sys,json; r=json.load(sys.stdin); print('✅ Enviado!' if r.get('ok') else f'❌ Erro: {r}')"
+
+      # ============================================
+      # UPLOAD ARTIFACTS
+      # ============================================
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: quina-brain-results-${{ github.run_number }}
+          path: |
+            projeto_loteria/quina_sao_joao/output/*.json
+            projeto_loteria/quina_sao_joao/memory/*.json
+          retention-days: 30
+
+      # ============================================
+      # SUMMARY
+      # ============================================
+      - name: Summary
+        run: |
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║              ✅ QUINA BRAIN EXECUÇÃO COMPLETA                 ║"
+          echo "╠══════════════════════════════════════════════════════════════╣"
+          echo "║                                                              ║"
+          echo "║  🧠 Concurso: 7051 (Quina de São João)                        ║"
+          echo "║  💰 Prêmio: R$ 250.000.000                                   ║"
+          echo "║  📅 Sorteio: 28/06/2026                                      ║"
+          echo "║  💵 Jogos: ~50                                               ║"
+          echo "║                                                              ║"
+          echo "║  📊 Arquivos gerados:                                        ║"
+          ls -la projeto_loteria/quina_sao_joao/memory/*.json 2>/dev/null || echo "    Nenhum arquivo"
+          echo "║                                                              ║"
+          echo "║  🧠 SIAOL-PRO Quina Brain v1.0                               ║"
+          echo "║                                                              ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
