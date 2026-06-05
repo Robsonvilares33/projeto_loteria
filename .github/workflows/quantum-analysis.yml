@@ -1,0 +1,72 @@
+name: SIAOL-PRO QUANTUM ANALYSIS
+
+on:
+  schedule:
+    # Run quantum analysis every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      lottery_type:
+        description: 'Lottery type (lotofacil, megasena, quina, lotomania)'
+        required: false
+        default: 'lotofacil'
+      n_qubits:
+        description: 'Number of qubits (10, 12, 15, 20)'
+        required: false
+        default: '15'
+      n_games:
+        description: 'Number of games to generate'
+        required: false
+        default: '33'
+
+jobs:
+  quantum-analysis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install numpy requests
+
+      - name: Create directories
+        run: |
+          mkdir -p output
+          mkdir -p memory
+
+      - name: Run Quantum Analysis
+        run: |
+          echo ""
+          echo "╔═══════════════════════════════════════════════════════════╗"
+          echo "║     SIAOL-PRO QUANTUM PARAMETER ANALYSIS v2.0            ║"
+          echo "╚═══════════════════════════════════════════════════════════╝"
+          echo ""
+
+          python3 quantum_parameter_executor.py
+
+          echo ""
+          echo "✅ Quantum analysis complete"
+
+      - name: Upload Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: quantum-results-${{ github.run_number }}
+          path: |
+            output/quantum_*.json
+            memory/
+          retention-days: 7
+
+      - name: Upload Games to Memory
+        run: |
+          if [ -f "output/quantum_parameter_results_*.json" ]; then
+            latest=$(ls -t output/quantum_parameter_results_*.json | head -1)
+            cp "$latest" memory/quantum_latest_results.json
+          fi
