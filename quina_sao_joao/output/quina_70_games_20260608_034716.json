@@ -1,0 +1,786 @@
+{
+  "option": 2,
+  "name": "COBERTURA 100% + HÍBRIDO",
+  "games": 70,
+  "cost": 210.0,
+  "coverage": {
+    "dezenas_covered": 8,
+    "total_dezenas": 8,
+    "percentage": 100.0,
+    "hot_covered": 13,
+    "cold_covered": 9
+  },
+  "portfolio": [
+    {
+      "id": 1,
+      "numbers": [
+        1,
+        15,
+        21,
+        31,
+        41
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 2,
+      "numbers": [
+        1,
+        15,
+        21,
+        31,
+        51
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 3,
+      "numbers": [
+        1,
+        15,
+        21,
+        31,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 4,
+      "numbers": [
+        1,
+        15,
+        21,
+        31,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 5,
+      "numbers": [
+        1,
+        15,
+        21,
+        41,
+        51
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 6,
+      "numbers": [
+        1,
+        15,
+        21,
+        41,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 7,
+      "numbers": [
+        1,
+        15,
+        21,
+        41,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 8,
+      "numbers": [
+        1,
+        15,
+        21,
+        51,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 9,
+      "numbers": [
+        1,
+        15,
+        21,
+        51,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 10,
+      "numbers": [
+        1,
+        15,
+        21,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 11,
+      "numbers": [
+        1,
+        15,
+        31,
+        41,
+        51
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 12,
+      "numbers": [
+        1,
+        15,
+        31,
+        41,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 13,
+      "numbers": [
+        1,
+        15,
+        31,
+        41,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 14,
+      "numbers": [
+        1,
+        15,
+        31,
+        51,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 15,
+      "numbers": [
+        1,
+        15,
+        31,
+        51,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 16,
+      "numbers": [
+        1,
+        15,
+        31,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 17,
+      "numbers": [
+        1,
+        15,
+        41,
+        51,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 18,
+      "numbers": [
+        1,
+        15,
+        41,
+        51,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 19,
+      "numbers": [
+        1,
+        15,
+        41,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 20,
+      "numbers": [
+        1,
+        15,
+        51,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 21,
+      "numbers": [
+        1,
+        21,
+        31,
+        41,
+        51
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 22,
+      "numbers": [
+        1,
+        21,
+        31,
+        41,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 23,
+      "numbers": [
+        1,
+        21,
+        31,
+        41,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 24,
+      "numbers": [
+        1,
+        21,
+        31,
+        51,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 25,
+      "numbers": [
+        1,
+        21,
+        31,
+        51,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 26,
+      "numbers": [
+        1,
+        21,
+        31,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 27,
+      "numbers": [
+        1,
+        21,
+        41,
+        51,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 28,
+      "numbers": [
+        1,
+        21,
+        41,
+        51,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 29,
+      "numbers": [
+        1,
+        21,
+        41,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 30,
+      "numbers": [
+        1,
+        21,
+        51,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 31,
+      "numbers": [
+        1,
+        31,
+        41,
+        51,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 32,
+      "numbers": [
+        1,
+        31,
+        41,
+        51,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 33,
+      "numbers": [
+        1,
+        31,
+        41,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 34,
+      "numbers": [
+        1,
+        31,
+        51,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 35,
+      "numbers": [
+        1,
+        41,
+        51,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 36,
+      "numbers": [
+        15,
+        21,
+        31,
+        41,
+        51
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 37,
+      "numbers": [
+        15,
+        21,
+        31,
+        41,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 38,
+      "numbers": [
+        15,
+        21,
+        31,
+        41,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 39,
+      "numbers": [
+        15,
+        21,
+        31,
+        51,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 40,
+      "numbers": [
+        15,
+        21,
+        31,
+        51,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 41,
+      "numbers": [
+        15,
+        21,
+        31,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 42,
+      "numbers": [
+        15,
+        21,
+        41,
+        51,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 43,
+      "numbers": [
+        15,
+        21,
+        41,
+        51,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 44,
+      "numbers": [
+        15,
+        21,
+        41,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 45,
+      "numbers": [
+        15,
+        21,
+        51,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 46,
+      "numbers": [
+        15,
+        31,
+        41,
+        51,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 47,
+      "numbers": [
+        15,
+        31,
+        41,
+        51,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 48,
+      "numbers": [
+        15,
+        31,
+        41,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 49,
+      "numbers": [
+        15,
+        31,
+        51,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 50,
+      "numbers": [
+        15,
+        41,
+        51,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 51,
+      "numbers": [
+        21,
+        31,
+        41,
+        51,
+        61
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 52,
+      "numbers": [
+        21,
+        31,
+        41,
+        51,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 53,
+      "numbers": [
+        21,
+        31,
+        41,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 54,
+      "numbers": [
+        21,
+        31,
+        51,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 55,
+      "numbers": [
+        21,
+        41,
+        51,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 56,
+      "numbers": [
+        31,
+        41,
+        51,
+        61,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 57,
+      "numbers": [
+        18,
+        24,
+        35,
+        69,
+        76
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 58,
+      "numbers": [
+        1,
+        13,
+        28,
+        35,
+        78
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 59,
+      "numbers": [
+        12,
+        24,
+        53,
+        62,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 60,
+      "numbers": [
+        1,
+        15,
+        28,
+        53,
+        78
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 61,
+      "numbers": [
+        3,
+        18,
+        38,
+        62,
+        76
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 62,
+      "numbers": [
+        1,
+        13,
+        28,
+        53,
+        69
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 63,
+      "numbers": [
+        6,
+        20,
+        27,
+        53,
+        69
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 64,
+      "numbers": [
+        3,
+        18,
+        28,
+        35,
+        69
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 65,
+      "numbers": [
+        3,
+        12,
+        27,
+        62,
+        76
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 66,
+      "numbers": [
+        5,
+        15,
+        24,
+        65,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 67,
+      "numbers": [
+        1,
+        15,
+        24,
+        62,
+        76
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 68,
+      "numbers": [
+        13,
+        27,
+        35,
+        62,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 69,
+      "numbers": [
+        3,
+        12,
+        30,
+        35,
+        62
+      ],
+      "strategy": "HIBRIDO"
+    },
+    {
+      "id": 70,
+      "numbers": [
+        12,
+        24,
+        38,
+        65,
+        72
+      ],
+      "strategy": "HIBRIDO"
+    }
+  ],
+  "generated_at": "2026-06-08T03:47:16.025368"
+}

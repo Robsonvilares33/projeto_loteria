@@ -1,0 +1,632 @@
+{
+  "option": 1,
+  "name": "COBERTURA 100% DEZENAS",
+  "games": 56,
+  "cost": 168.0,
+  "coverage": {
+    "dezenas_covered": 8,
+    "total_dezenas": 8,
+    "percentage": 100.0,
+    "hot_covered": 2,
+    "cold_covered": 1
+  },
+  "portfolio": [
+    {
+      "id": 1,
+      "numbers": [
+        1,
+        15,
+        21,
+        31,
+        41
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 2,
+      "numbers": [
+        1,
+        15,
+        21,
+        31,
+        51
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 3,
+      "numbers": [
+        1,
+        15,
+        21,
+        31,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 4,
+      "numbers": [
+        1,
+        15,
+        21,
+        31,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 5,
+      "numbers": [
+        1,
+        15,
+        21,
+        41,
+        51
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 6,
+      "numbers": [
+        1,
+        15,
+        21,
+        41,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 7,
+      "numbers": [
+        1,
+        15,
+        21,
+        41,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 8,
+      "numbers": [
+        1,
+        15,
+        21,
+        51,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 9,
+      "numbers": [
+        1,
+        15,
+        21,
+        51,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 10,
+      "numbers": [
+        1,
+        15,
+        21,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 11,
+      "numbers": [
+        1,
+        15,
+        31,
+        41,
+        51
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 12,
+      "numbers": [
+        1,
+        15,
+        31,
+        41,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 13,
+      "numbers": [
+        1,
+        15,
+        31,
+        41,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 14,
+      "numbers": [
+        1,
+        15,
+        31,
+        51,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 15,
+      "numbers": [
+        1,
+        15,
+        31,
+        51,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 16,
+      "numbers": [
+        1,
+        15,
+        31,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 17,
+      "numbers": [
+        1,
+        15,
+        41,
+        51,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 18,
+      "numbers": [
+        1,
+        15,
+        41,
+        51,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 19,
+      "numbers": [
+        1,
+        15,
+        41,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 20,
+      "numbers": [
+        1,
+        15,
+        51,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 21,
+      "numbers": [
+        1,
+        21,
+        31,
+        41,
+        51
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 22,
+      "numbers": [
+        1,
+        21,
+        31,
+        41,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 23,
+      "numbers": [
+        1,
+        21,
+        31,
+        41,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 24,
+      "numbers": [
+        1,
+        21,
+        31,
+        51,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 25,
+      "numbers": [
+        1,
+        21,
+        31,
+        51,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 26,
+      "numbers": [
+        1,
+        21,
+        31,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 27,
+      "numbers": [
+        1,
+        21,
+        41,
+        51,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 28,
+      "numbers": [
+        1,
+        21,
+        41,
+        51,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 29,
+      "numbers": [
+        1,
+        21,
+        41,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 30,
+      "numbers": [
+        1,
+        21,
+        51,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 31,
+      "numbers": [
+        1,
+        31,
+        41,
+        51,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 32,
+      "numbers": [
+        1,
+        31,
+        41,
+        51,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 33,
+      "numbers": [
+        1,
+        31,
+        41,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 34,
+      "numbers": [
+        1,
+        31,
+        51,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 35,
+      "numbers": [
+        1,
+        41,
+        51,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 36,
+      "numbers": [
+        15,
+        21,
+        31,
+        41,
+        51
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 37,
+      "numbers": [
+        15,
+        21,
+        31,
+        41,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 38,
+      "numbers": [
+        15,
+        21,
+        31,
+        41,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 39,
+      "numbers": [
+        15,
+        21,
+        31,
+        51,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 40,
+      "numbers": [
+        15,
+        21,
+        31,
+        51,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 41,
+      "numbers": [
+        15,
+        21,
+        31,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 42,
+      "numbers": [
+        15,
+        21,
+        41,
+        51,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 43,
+      "numbers": [
+        15,
+        21,
+        41,
+        51,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 44,
+      "numbers": [
+        15,
+        21,
+        41,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 45,
+      "numbers": [
+        15,
+        21,
+        51,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 46,
+      "numbers": [
+        15,
+        31,
+        41,
+        51,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 47,
+      "numbers": [
+        15,
+        31,
+        41,
+        51,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 48,
+      "numbers": [
+        15,
+        31,
+        41,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 49,
+      "numbers": [
+        15,
+        31,
+        51,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 50,
+      "numbers": [
+        15,
+        41,
+        51,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 51,
+      "numbers": [
+        21,
+        31,
+        41,
+        51,
+        61
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 52,
+      "numbers": [
+        21,
+        31,
+        41,
+        51,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 53,
+      "numbers": [
+        21,
+        31,
+        41,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 54,
+      "numbers": [
+        21,
+        31,
+        51,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 55,
+      "numbers": [
+        21,
+        41,
+        51,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    },
+    {
+      "id": 56,
+      "numbers": [
+        31,
+        41,
+        51,
+        61,
+        72
+      ],
+      "strategy": "100%_DEZENA"
+    }
+  ],
+  "generated_at": "2026-06-08T03:52:42.845627"
+}

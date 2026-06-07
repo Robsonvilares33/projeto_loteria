@@ -1,0 +1,74 @@
+{
+  "timestamp": "2026-06-08T04:17:44.916057",
+  "parameters": {
+    "best_qubits": 8,
+    "best_walk_steps": 3,
+    "best_rotation_angle": 0.7
+  },
+  "sweep_results": {
+    "timestamp": "2026-06-08T04:17:40.908070",
+    "qubit_sweep": [
+      {
+        "n_qubits": 8,
+        "entropy": 8.0,
+        "max_prob": 0.00390625
+      },
+      {
+        "n_qubits": 10,
+        "entropy": 10.0,
+        "max_prob": 0.0009765625
+      },
+      {
+        "n_qubits": 12,
+        "entropy": 12.0,
+        "max_prob": 0.000244140625
+      }
+    ],
+    "walk_sweep": [
+      {
+        "steps": 2,
+        "entropy": 6.783176960102943,
+        "max_prob": 0.21351883868650642
+      },
+      {
+        "steps": 3,
+        "entropy": 4.057654814904045,
+        "max_prob": 0.5599351560854813
+      },
+      {
+        "steps": 4,
+        "entropy": 4.0990737252781715,
+        "max_prob": 0.5167230012809376
+      }
+    ],
+    "rotation_sweep": [
+      {
+        "angle": 0.3,
+        "entropy": 9.360525804877428,
+        "max_prob": 0.013005946268321562
+      },
+      {
+        "angle": 0.5,
+        "entropy": 8.271794982944144,
+        "max_prob": 0.04904911297401258
+      },
+      {
+        "angle": 0.7,
+        "entropy": 6.75441881456625,
+        "max_prob": 0.14102405570740043
+      }
+    ],
+    "qaoa_sweep": [
+      {
+        "depth": 2,
+        "best_cost": 8.192,
+        "best_gamma": [
+          3.755165185199824,
+          5.806084838943597
+        ],
+        "best_beta": [
+          0.8611392793573518,
+          1.2331212086984737
+        ],
+        "samples": [
+          
