@@ -67,38 +67,57 @@ class FullCoverageGenerator:
 
         pool = self.generate_dezena_pool()
 
-        # Selecionar 1 número de cada dezena (8 números)
+        # Selecionar 2 números de cada dezena (16 números) para mais diversificação
         selected = []
         for d in range(8):
             nums = pool[d]
-            if nums:
+            if len(nums) >= 2:
+                selected.append(nums[0])  # Primeiro (hot)
+                selected.append(nums[1])  # Segundo (alternativa)
+            elif nums:
                 selected.append(nums[0])
 
-        # Gerar todas combinações de 5 dos 8 selecionados
+        # Gerar todas combinações de 5 dos 16 selecionados
         games = []
+        seen = set()
         for combo in combinations(selected, 5):
-            games.append(sorted(list(combo)))
+            game = tuple(sorted(combo))
+            if game not in seen:
+                seen.add(game)
+                games.append(list(game))
 
-        # Se menos de 56, completar com variações
+        # Se menos de 56, completar com variações usando cold numbers
+        all_nums = list(range(1, 81))
         while len(games) < 56:
-            # Trocar um número por outro da mesma dezena
-            for d in range(8):
-                nums = pool[d]
-                if len(nums) > 1:
-                    new_game = games[-1].copy()
-                    # Substituir número da dezena d
-                    for i, n in enumerate(new_game):
-                        if (n - 1) // 10 == d and len(nums) > 1:
-                            new_game[i] = nums[1] if nums[0] != n else nums[1]
-                            break
-                    new_game = sorted(new_game)
-                    if new_game not in games:
-                        games.append(new_game)
-                        break
+            # Gerar jogo com mix de hot e cold
+            hot_part = random.sample([n for n in self.hot_numbers[:10] if n not in games[-1]], min(2, 10))
+            dezenas_used = {(n-1)//10 for n in games[-1]}
+
+            # Adicionar cold numbers de dezenas não usadas
+            cold_part = []
+            for n in self.cold_numbers[:10]:
+                if (n-1)//10 not in dezenas_used and len(cold_part) < 2:
+                    cold_part.append(n)
+                    dezenas_used.add((n-1)//10)
+
+            # Completar com números aleatórios
+            remaining = []
+            for n in all_nums:
+                if n not in games[-1] and (n-1)//10 not in dezenas_used and len(remaining) < 1:
+                    remaining.append(n)
+                    dezenas_used.add((n-1)//10)
+
+            new_game = sorted(hot_part + cold_part + remaining)[:5]
+            if len(new_game) == 5:
+                game_tuple = tuple(new_game)
+                if game_tuple not in seen:
+                    seen.add(game_tuple)
+                    games.append(new_game)
 
         games = games[:56]  # Garantir exatamente 56
 
         print(f"   ✅ {len(games)} jogos gerados")
+        print(f"   📊 Números únicos: {len(set(sum(games, [])))}")
         return games
 
     def generate_70_games(self) -> List[List[int]]:
