@@ -59,11 +59,11 @@ class FullCoverageGenerator:
         """Gera 56 jogos com cobertura 100% dezenas"""
         print("\n🎰 GERANDO 56 JOGOS (100% DEZENAS)...")
 
-        # Defaults se não configurado
+        # Defaults se não configurado - ATUALIZADO 08/06/2026 (7044 concursos)
         if not self.hot_numbers:
-            self.hot_numbers = [15, 13, 27, 12, 20, 18, 24, 1, 3, 5, 14, 35, 38, 11, 53]
+            self.hot_numbers = [4, 26, 52, 44, 49, 31, 29, 16, 56, 5, 53, 42, 39, 15, 9]
         if not self.cold_numbers:
-            self.cold_numbers = [69, 6, 62, 30, 72, 28, 76, 78, 74, 65, 79, 47, 77, 17, 66]
+            self.cold_numbers = [2, 36, 7, 69, 28, 17, 35, 22, 30, 50, 68, 1, 20, 25, 58]
 
         pool = self.generate_dezena_pool()
 
@@ -105,11 +105,11 @@ class FullCoverageGenerator:
         """Gera 70 jogos com cobertura 100% + híbrido"""
         print("\n🎰 GERANDO 70 JOGOS (100% + HÍBRIDO)...")
 
-        # Defaults se não configurado
+        # Defaults se não configurado - ATUALIZADO 08/06/2026 (7044 concursos)
         if not self.hot_numbers:
-            self.hot_numbers = [15, 13, 27, 12, 20, 18, 24, 1, 3, 5, 14, 35, 38, 11, 53]
+            self.hot_numbers = [4, 26, 52, 44, 49, 31, 29, 16, 56, 5, 53, 42, 39, 15, 9]
         if not self.cold_numbers:
-            self.cold_numbers = [69, 6, 62, 30, 72, 28, 76, 78, 74, 65, 79, 47, 77, 17, 66]
+            self.cold_numbers = [2, 36, 7, 69, 28, 17, 35, 22, 30, 50, 68, 1, 20, 25, 58]
 
         pool = self.generate_dezena_pool()
 
@@ -207,9 +207,9 @@ def main():
 ╚══════════════════════════════════════════════════════════════════════════════╝
 """)
 
-    # Carregar números atuais
-    hot_numbers = [15, 13, 27, 12, 20, 18, 24, 1, 3, 5, 14, 35, 38, 11, 53]
-    cold_numbers = [69, 6, 62, 30, 72, 28, 76, 78, 74, 65, 79, 47, 77, 17, 66]
+    # Carregar números atuais - ATUALIZADO 08/06/2026 (7044 concursos)
+    hot_numbers = [4, 26, 52, 44, 49, 31, 29, 16, 56, 5, 53, 42, 39, 15, 9]
+    cold_numbers = [2, 36, 7, 69, 28, 17, 35, 22, 30, 50, 68, 1, 20, 25, 58]
 
     generator = FullCoverageGenerator()
     generator.set_numbers(hot_numbers, cold_numbers)
@@ -378,8 +378,8 @@ def send_to_telegram(result_56: Dict, result_70: Dict):
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🔥 HOT: {', '.join(map(str, [15, 13, 27, 12, 20, 18, 24, 1, 3, 5]))}
-❄️ COLD: {', '.join(map(str, [69, 6, 62, 30, 72, 28, 76, 78, 74, 65]))}
+🔥 HOT: {', '.join(map(str, [4, 26, 52, 44, 49, 31, 29, 16, 56, 5]))}
+❄️ COLD: {', '.join(map(str, [2, 36, 7, 69, 28, 17, 35, 22, 30, 50]))}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🧠 SIAOL-PRO v3.1 Full Coverage"""

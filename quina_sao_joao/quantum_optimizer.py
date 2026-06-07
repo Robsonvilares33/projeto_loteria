@@ -485,8 +485,9 @@ class QuantumGameGenerator:
     """Gera jogos Quina usando algoritmos quânticos"""
 
     def __init__(self):
-        self.hot_numbers = [15, 13, 27, 12, 20, 18, 24, 1, 3, 5, 14, 35, 38, 11, 53]
-        self.cold_numbers = [69, 6, 62, 30, 72, 28, 76, 78, 74, 65]
+        # ATUALIZADO 08/06/2026 (7044 concursos reais)
+        self.hot_numbers = [4, 26, 52, 44, 49, 31, 29, 16, 56, 5, 53, 42, 39, 15, 9]
+        self.cold_numbers = [2, 36, 7, 69, 28, 17, 35, 22, 30, 50, 68, 1, 20, 25, 58]
 
     def generate_qaoa_games(self, n_games: int = 10) -> List[List[int]]:
         """Gera jogos usando QAOA"""
