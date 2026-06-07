@@ -335,7 +335,7 @@ EOF
         if: github.event.inputs.force_telegram == 'true' || contains(github.event.schedule, '18:00')
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_CHAT_ID: ${{ secrets.QUINABRAINV }}
         run: |
           if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
             echo "⚠️ Telegram credentials not configured"
