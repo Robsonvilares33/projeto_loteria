@@ -1,4 +1,4 @@
-name: "🧠 Quina Brain v3.1 - Auto Learning"
+name: "🧠 Quina Brain v3.3 - Auto Learning"
 
 on:
   schedule:
@@ -26,18 +26,23 @@ jobs:
 
       - name: Create .env.telegram
         run: |
-          echo "TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN" > .env.telegram
-          echo "TELEGRAM_CHAT_ID=$TELEGRAM_CHAT_ID" >> .env.telegram
+          echo "TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN" > quina_sao_joao/.env.telegram
+          echo "TELEGRAM_CHAT_ID=$TELEGRAM_CHAT_ID" >> quina_sao_joao/.env.telegram
 
-      - name: Run Quina Brain - Adaptive
-        run: |
-          cd quina_sao_joao
-          python3 quina_adaptive_brain.py
-
-      - name: Run Quina Brain - Full Coverage
+      - name: Run Quina Brain - Full Coverage v3.1
         run: |
           cd quina_sao_joao
           python3 quina_full_coverage.py
+
+      - name: Run Quina Brain - Quantum Optimizer v3.2
+        run: |
+          cd quina_sao_joao
+          python3 quantum_optimizer.py
+
+      - name: Run Quina Brain - Backtest Engine v3.3
+        run: |
+          cd quina_sao_joao
+          python3 quina_backtest_engine.py
 
       - name: Save memory
         run: |
@@ -53,19 +58,21 @@ jobs:
         run: |
           curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
             -d "chat_id=$TELEGRAM_CHAT_ID" \
-            -d "text=🧠 QUINA BRAIN v3.1 - Auto Learning Complete
+            -d "text=🧠 QUINA BRAIN v3.3 - Auto Learning Complete
 
-✅ Adaptive Brain: OK
-✅ Full Coverage: OK
+✅ Full Coverage v3.1: OK
+✅ Quantum Optimizer v3.2: OK
+✅ Backtest Engine v3.3: OK
 ⏰ Time: $(date +'%H:%M')
-📊 Concursos: 7000+" | bash
+📊 Concursos: 7044
+🎯 Premio: R$ 250.000.000" | bash
 
       - name: Notify Failure
         if: failure()
         run: |
           curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
             -d "chat_id=$TELEGRAM_CHAT_ID" \
-            -d "text=❌ QUINA BRAIN v3.1 - ERRO
+            -d "text=❌ QUINA BRAIN v3.3 - ERRO
 
-⚠️ Falha na execução
+⚠️ Falha na execucao
 📅 Time: $(date +'%H:%M')" | bash
