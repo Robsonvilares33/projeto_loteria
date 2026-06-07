@@ -781,5 +781,77 @@ def send_telegram_summary(data: Dict):
         print(f"⚠️ Erro Telegram: {e}")
 
 
+# ============================================
+# FULL COVERAGE OPTIONS (v3.1)
+# ============================================
+def generate_full_coverage_options():
+    """Gera as opções de cobertura total 100%"""
+    try:
+        from quina_full_coverage import FullCoverageGenerator
+    except ImportError:
+        print("⚠️ quina_full_coverage.py não encontrado")
+        return None
+
+    print("\n" + "="*70)
+    print("🎯 COBERTURA 100% - OPÇÕES DE INVESTIMENTO")
+    print("="*70)
+
+    generator = FullCoverageGenerator()
+    generator.set_numbers(
+        hot=[15, 13, 27, 12, 20, 18, 24, 1, 3, 5, 14, 35, 38, 11, 53],
+        cold=[69, 6, 62, 30, 72, 28, 76, 78, 74, 65, 79, 47, 77, 17, 66]
+    )
+
+    # Opção 1: 56 jogos (100% dezenas)
+    games_56 = generator.generate_56_games()
+    coverage_56 = generator.verify_coverage(games_56)
+
+    # Opção 2: 70 jogos (100% + híbrido)
+    games_70 = generator.generate_70_games()
+    coverage_70 = generator.verify_coverage(games_70)
+
+    print(f"""
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 OPÇÃO 1: COBERTURA 100% DEZENAS
+   🎰 56 jogos = R$ 168,00
+   🌍 Dezenas: {coverage_56['dezenas_covered']}/8 ({coverage_56['percentage']}%)
+   🔥 Hot cobertos: {coverage_56['hot_covered']}/15
+   ❄️ Cold cobertos: {coverage_56['cold_covered']}/10
+
+📊 OPÇÃO 2: COBERTURA 100% + HÍBRIDO
+   🎰 70 jogos = R$ 210,00
+   🌍 Dezenas: {coverage_70['dezenas_covered']}/8 ({coverage_70['percentage']}%)
+   🔥 Hot cobertos: {coverage_70['hot_covered']}/15
+   ❄️ Cold cobertos: {coverage_70['cold_covered']}/10
+   ✅ +MAIS CHANCES DE ACERTO
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 RECOMENDAÇÃO: Opção 2 (70 jogos)
+   → Maior cobertura de números quentes/frios
+   → Mais combinações vencedoras
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+""")
+
+    return {
+        "option_56": {
+            "games": games_56,
+            "count": len(games_56),
+            "cost": len(games_56) * 3.0,
+            "coverage": coverage_56
+        },
+        "option_70": {
+            "games": games_70,
+            "count": len(games_70),
+            "cost": len(games_70) * 3.0,
+            "coverage": coverage_70
+        }
+    }
+
+
 if __name__ == "__main__":
-    main()
+    # Escolha: main() ou generate_full_coverage_options()
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "--full-coverage":
+        generate_full_coverage_options()
+    else:
+        main()

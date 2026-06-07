@@ -1,47 +1,47 @@
 {
   "total_draws": 7000,
-  "analysis_date": "2026-06-07T22:02:53.796004",
+  "analysis_date": "2026-06-08T00:03:31.984636",
   "dezenas": {
     "distribution": {
       "dezena_0": {
         "range": "1-10",
-        "count": 4497,
-        "percentage": 12.85
+        "count": 4455,
+        "percentage": 12.73
       },
       "dezena_1": {
         "range": "11-20",
-        "count": 4842,
-        "percentage": 13.83
+        "count": 4875,
+        "percentage": 13.93
       },
       "dezena_2": {
         "range": "21-30",
-        "count": 4628,
-        "percentage": 13.22
+        "count": 4550,
+        "percentage": 13.0
       },
       "dezena_3": {
         "range": "31-40",
-        "count": 4313,
-        "percentage": 12.32
+        "count": 4403,
+        "percentage": 12.58
       },
       "dezena_4": {
         "range": "41-50",
-        "count": 4339,
-        "percentage": 12.4
+        "count": 4345,
+        "percentage": 12.41
       },
       "dezena_5": {
         "range": "51-60",
-        "count": 4178,
-        "percentage": 11.94
+        "count": 4186,
+        "percentage": 11.96
       },
       "dezena_6": {
         "range": "61-70",
-        "count": 4162,
-        "percentage": 11.89
+        "count": 4195,
+        "percentage": 11.99
       },
       "dezena_7": {
         "range": "80",
-        "count": 4041,
-        "percentage": 11.55
+        "count": 3991,
+        "percentage": 11.4
       }
     },
     "hottest_dezena": "dezena_1",
@@ -49,113 +49,113 @@
   },
   "parity": {
     "stats": {
-      "all_odd": 199,
-      "all_even": 226,
-      "mixed_2odd_3even": 2171,
-      "mixed_3odd_2even": 2170,
-      "mixed_4odd_1even": 1105,
-      "mixed_1odd_4even": 1129
+      "all_odd": 237,
+      "all_even": 223,
+      "mixed_2odd_3even": 2165,
+      "mixed_3odd_2even": 2207,
+      "mixed_4odd_1even": 1098,
+      "mixed_1odd_4even": 1070
     },
-    "most_common": "mixed_2odd_3even",
+    "most_common": "mixed_3odd_2even",
     "probability": {
-      "all_odd": 2.84,
-      "all_even": 3.23,
-      "mixed_2odd_3even": 31.01,
-      "mixed_3odd_2even": 31.0,
-      "mixed_4odd_1even": 15.79,
-      "mixed_1odd_4even": 16.13
+      "all_odd": 3.39,
+      "all_even": 3.19,
+      "mixed_2odd_3even": 30.93,
+      "mixed_3odd_2even": 31.53,
+      "mixed_4odd_1even": 15.69,
+      "mixed_1odd_4even": 15.29
     }
   },
   "sum": {
-    "min": 28,
-    "max": 354,
-    "avg": 196.63,
+    "min": 32,
+    "max": 363,
+    "avg": 196.72,
     "ranges": {
-      "0-150": 1356,
-      "151-200": 2374,
-      "201-250": 2189,
-      "251-300": 912,
-      "301-350": 166,
-      "351-400": 3
+      "0-150": 1351,
+      "151-200": 2356,
+      "201-250": 2240,
+      "251-300": 907,
+      "301-350": 142,
+      "351-400": 4
     },
     "most_common_range": "151-200"
   },
   "distance": {
-    "avg_distance": 13.26,
+    "avg_distance": 13.24,
     "most_common_distance": 1,
     "distribution": {
-      "1": 1709,
-      "2": 1654,
-      "3": 1504,
-      "4": 1459,
-      "5": 1341,
-      "6": 1262,
-      "7": 1258,
-      "8": 1127,
-      "9": 1091,
-      "10": 1017
+      "1": 1678,
+      "2": 1603,
+      "3": 1474,
+      "4": 1393,
+      "6": 1355,
+      "5": 1344,
+      "7": 1213,
+      "8": 1198,
+      "9": 1083,
+      "10": 1018
     }
   },
   "repetition": {
-    "avg_repeated_from_previous": 0.38,
+    "avg_repeated_from_previous": 0.28,
     "distribution": {
-      "0": 67,
+      "0": 72,
       "1": 26,
-      "2": 6
+      "2": 1
     }
   },
   "hot_cold": {
     "hot_numbers": [
+      15,
+      13,
       27,
+      12,
+      20,
       18,
       24,
-      3,
-      14,
-      12,
-      13,
-      16,
-      15,
-      22,
-      26,
       1,
-      2,
-      35,
-      43,
-      50,
-      37,
+      3,
       5,
-      17,
-      8
+      14,
+      35,
+      38,
+      11,
+      53,
+      37,
+      22,
+      33,
+      41,
+      26
     ],
     "cold_numbers": [
-      45,
-      57,
-      76,
+      69,
       6,
-      59,
-      48,
-      51,
+      62,
+      30,
+      72,
+      28,
+      76,
+      78,
+      74,
       65,
-      54,
+      71,
       19,
       56,
-      69,
+      31,
       68,
-      36,
-      49,
-      77,
       73,
-      80,
+      59,
       39,
+      77,
       4
     ],
     "most_frequent": [
-      27,
-      536
+      15,
+      559
     ],
     "least_frequent": [
-      45,
-      408
+      69,
+      406
     ]
   }
 }
