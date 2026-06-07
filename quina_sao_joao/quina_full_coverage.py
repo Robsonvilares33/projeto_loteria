@@ -59,6 +59,12 @@ class FullCoverageGenerator:
         """Gera 56 jogos com cobertura 100% dezenas"""
         print("\n🎰 GERANDO 56 JOGOS (100% DEZENAS)...")
 
+        # Defaults se não configurado
+        if not self.hot_numbers:
+            self.hot_numbers = [15, 13, 27, 12, 20, 18, 24, 1, 3, 5, 14, 35, 38, 11, 53]
+        if not self.cold_numbers:
+            self.cold_numbers = [69, 6, 62, 30, 72, 28, 76, 78, 74, 65, 79, 47, 77, 17, 66]
+
         pool = self.generate_dezena_pool()
 
         # Selecionar 1 número de cada dezena (8 números)
@@ -98,6 +104,12 @@ class FullCoverageGenerator:
     def generate_70_games(self) -> List[List[int]]:
         """Gera 70 jogos com cobertura 100% + híbrido"""
         print("\n🎰 GERANDO 70 JOGOS (100% + HÍBRIDO)...")
+
+        # Defaults se não configurado
+        if not self.hot_numbers:
+            self.hot_numbers = [15, 13, 27, 12, 20, 18, 24, 1, 3, 5, 14, 35, 38, 11, 53]
+        if not self.cold_numbers:
+            self.cold_numbers = [69, 6, 62, 30, 72, 28, 76, 78, 74, 65, 79, 47, 77, 17, 66]
 
         pool = self.generate_dezena_pool()
 
