@@ -1,0 +1,161 @@
+{
+  "total_draws": 7000,
+  "analysis_date": "2026-06-07T22:02:53.796004",
+  "dezenas": {
+    "distribution": {
+      "dezena_0": {
+        "range": "1-10",
+        "count": 4497,
+        "percentage": 12.85
+      },
+      "dezena_1": {
+        "range": "11-20",
+        "count": 4842,
+        "percentage": 13.83
+      },
+      "dezena_2": {
+        "range": "21-30",
+        "count": 4628,
+        "percentage": 13.22
+      },
+      "dezena_3": {
+        "range": "31-40",
+        "count": 4313,
+        "percentage": 12.32
+      },
+      "dezena_4": {
+        "range": "41-50",
+        "count": 4339,
+        "percentage": 12.4
+      },
+      "dezena_5": {
+        "range": "51-60",
+        "count": 4178,
+        "percentage": 11.94
+      },
+      "dezena_6": {
+        "range": "61-70",
+        "count": 4162,
+        "percentage": 11.89
+      },
+      "dezena_7": {
+        "range": "80",
+        "count": 4041,
+        "percentage": 11.55
+      }
+    },
+    "hottest_dezena": "dezena_1",
+    "coldest_dezena": "dezena_7"
+  },
+  "parity": {
+    "stats": {
+      "all_odd": 199,
+      "all_even": 226,
+      "mixed_2odd_3even": 2171,
+      "mixed_3odd_2even": 2170,
+      "mixed_4odd_1even": 1105,
+      "mixed_1odd_4even": 1129
+    },
+    "most_common": "mixed_2odd_3even",
+    "probability": {
+      "all_odd": 2.84,
+      "all_even": 3.23,
+      "mixed_2odd_3even": 31.01,
+      "mixed_3odd_2even": 31.0,
+      "mixed_4odd_1even": 15.79,
+      "mixed_1odd_4even": 16.13
+    }
+  },
+  "sum": {
+    "min": 28,
+    "max": 354,
+    "avg": 196.63,
+    "ranges": {
+      "0-150": 1356,
+      "151-200": 2374,
+      "201-250": 2189,
+      "251-300": 912,
+      "301-350": 166,
+      "351-400": 3
+    },
+    "most_common_range": "151-200"
+  },
+  "distance": {
+    "avg_distance": 13.26,
+    "most_common_distance": 1,
+    "distribution": {
+      "1": 1709,
+      "2": 1654,
+      "3": 1504,
+      "4": 1459,
+      "5": 1341,
+      "6": 1262,
+      "7": 1258,
+      "8": 1127,
+      "9": 1091,
+      "10": 1017
+    }
+  },
+  "repetition": {
+    "avg_repeated_from_previous": 0.38,
+    "distribution": {
+      "0": 67,
+      "1": 26,
+      "2": 6
+    }
+  },
+  "hot_cold": {
+    "hot_numbers": [
+      27,
+      18,
+      24,
+      3,
+      14,
+      12,
+      13,
+      16,
+      15,
+      22,
+      26,
+      1,
+      2,
+      35,
+      43,
+      50,
+      37,
+      5,
+      17,
+      8
+    ],
+    "cold_numbers": [
+      45,
+      57,
+      76,
+      6,
+      59,
+      48,
+      51,
+      65,
+      54,
+      19,
+      56,
+      69,
+      68,
+      36,
+      49,
+      77,
+      73,
+      80,
+      39,
+      4
+    ],
+    "most_frequent": [
+      27,
+      536
+    ],
+    "least_frequent": [
+      45,
+      408
+    ]
+  }
+}

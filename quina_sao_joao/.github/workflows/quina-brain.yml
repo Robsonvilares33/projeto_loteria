@@ -128,6 +128,20 @@ except Exception as e:
 EOF
 
       # ============================================
+      # QUINA ENHANCED ANALYZER (Backtesting + Patterns)
+      # ============================================
+      - name: "🔍 Run Enhanced Analysis (Backtesting + Patterns)"
+        run: |
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║           🔍 ANÁLISE DE PADRÕES + BACKTESTING               ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
+
+          cd projeto_loteria/quina_sao_joao
+          python3 quina_enhanced_analyzer.py
+
+      # ============================================
       # QUINA BRAIN EXECUTION
       # ============================================
       - name: "🧠 Execute Quina Brain Engine"
