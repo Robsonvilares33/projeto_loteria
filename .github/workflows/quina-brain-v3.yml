@@ -1,8 +1,8 @@
-name: "🧠 Quina Brain v3.3 - Auto Learning"
+name: "Quina Brain v3.3 - Auto Learning"
 
 on:
   schedule:
-    - cron: "0 */6 * * *"  # A cada 6 horas
+    - cron: "0 */6 * * *"
   workflow_dispatch:
   repository_dispatch:
     types: [run-quina-brain]
@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Debug: Print Environment
+      - name: Debug Environment
         run: |
           echo "=== DEBUG INFO ==="
           echo "TELEGRAM_BOT_TOKEN exists: ${{ secrets.TELEGRAM_BOT_TOKEN != '' }}"
@@ -40,21 +40,21 @@ jobs:
           echo "=== .env.telegram created ==="
           cat quina_sao_joao/.env.telegram || echo "File not found"
 
-      - name: Run Quina Brain - Full Coverage v3.1
+      - name: Run Full Coverage v3.1
         continue-on-error: true
         run: |
           cd quina_sao_joao
           python3 quina_full_coverage.py 2>&1
           echo "=== v3.1 EXIT CODE: $? ==="
 
-      - name: Run Quina Brain - Quantum Optimizer v3.2
+      - name: Run Quantum Optimizer v3.2
         continue-on-error: true
         run: |
           cd quina_sao_joao
           python3 quantum_optimizer.py 2>&1
           echo "=== v3.2 EXIT CODE: $? ==="
 
-      - name: Run Quina Brain - Backtest Engine v3.3
+      - name: Run Backtest Engine v3.3
         continue-on-error: true
         run: |
           cd quina_sao_joao
@@ -67,7 +67,7 @@ jobs:
           git add memory/*.json output/*.json 2>/dev/null || true
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git commit -m "🧠 Auto-update: $(date +'%Y-%m-%d %H:%M')" 2>/dev/null || true
+          git commit -m "Auto-update: $(date +'%Y-%m-%d %H:%M')" 2>/dev/null || true
           git push 2>/dev/null || true
 
       - name: Notify Success
@@ -77,14 +77,14 @@ jobs:
           if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
             curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
               -d "chat_id=$TELEGRAM_CHAT_ID" \
-              -d "text=🧠 QUINA BRAIN v3.3 - Auto Learning Complete
+              -d "text=QUINA BRAIN v3.3 - Auto Learning Complete
 
-✅ Full Coverage v3.1: OK
-✅ Quantum Optimizer v3.2: OK
-✅ Backtest Engine v3.3: OK
-⏰ Time: $(date +'%H:%M')
-📊 Concursos: 7044
-🎯 Premio: R\$ 250.000.000"
+Full Coverage v3.1: OK
+Quantum Optimizer v3.2: OK
+Backtest Engine v3.3: OK
+Time: $(date +'%H:%M')
+Concursos: 7044
+Premio: R$ 250.000.000"
             echo "=== Notification sent ==="
           else
             echo "=== SKIPPED: Telegram credentials not configured ==="
@@ -97,11 +97,11 @@ jobs:
           if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
             curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
               -d "chat_id=$TELEGRAM_CHAT_ID" \
-              -d "text=❌ QUINA BRAIN v3.3 - ERRO
+              -d "text=QUINA BRAIN v3.3 - ERRO
 
-⚠️ Falha na execucao
-📅 Time: $(date +'%H:%M')
-🔍 Check: github.com/${{ github.repository }}/actions"
+Falha na execucao
+Time: $(date +'%H:%M')
+Check: github.com/${{ github.repository }}/actions"
             echo "=== Failure notification sent ==="
           else
             echo "=== SKIPPED: Telegram credentials not configured ==="
