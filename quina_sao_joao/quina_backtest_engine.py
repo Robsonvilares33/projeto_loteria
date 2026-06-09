@@ -224,7 +224,7 @@ class QuinaBacktestEngine:
         if len(self.current_cold) > 15:
             self.current_cold = self.current_cold[:15]
 
-    def run_backtest(self, start_index: int = 0, end_index: int = 7044) -> Dict:
+    def run_backtest(self, start_index: int = 0, end_index: int = 7045) -> Dict:
         """Executa backtest nos concursos"""
         print("\n" + "="*70)
         print("🔬 BACKTEST: 56 JOGOS vs 70 JOGOS")
@@ -303,7 +303,7 @@ class QuinaBacktestEngine:
         backtest = self.run_backtest(start_index=0, end_index=len(self.history))
 
         print(f"""
-📊 RESULTADOS DO BACKTEST (7044 concursos):
+📊 RESULTADOS DO BACKTEST (7045 concursos):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📋 OPÇÃO 1: 56 JOGOS (R$ 168,00)
@@ -319,11 +319,25 @@ class QuinaBacktestEngine:
    🎯 5 acertos: {backtest['70_games']['percentages']['hit_5']}% por concurso
 """)
 
-        # Gerar jogos para concursos futuros (7045 a 7051)
+        # Gerar jogos para concursos futuros (7046 a 7051)
+        # 7045 já aconteceu, então começamos do 7046
         games_schedule = []
-        last_contest = 7044
 
-        for next_contest in range(last_contest + 1, TARGET_CONTEST + 1):
+        # Detectar último concurso no histórico
+        if len(self.history) >= 7045:
+            last_contest = 7045  # 7045 já foi realizado
+        else:
+            last_contest = len(self.history)  # Fallback
+
+        # Mostrar apenas 5 concursos futuros (7046, 7047, 7048, 7049, 7050)
+        future_concourses = []
+        for c in range(7046, 7051):  # 7046 a 7050
+            future_concourses.append(c)
+        # Adicionar 7051 se não estiver na lista
+        if 7051 not in future_concourses:
+            future_concourses.append(7051)
+
+        for next_contest in future_concourses:
             days_until = (datetime(2026, 6, 28) - datetime.now()).days
             days_until = max(1, days_until)
 
@@ -416,7 +430,7 @@ def main():
 ║                                                                            ║
 ║     🧠 QUINA BRAIN v3.3 - BACKTEST ENGINE                                  ║
 ║                                                                            ║
-║     • Backtest completo (7044 concursos)                                   ║
+║     • Backtest completo (7045 concursos)                                   ║
 ║     • Opção 1: 56 jogos (R$ 168)                                           ║
 ║     • Opção 2: 70 jogos (R$ 210)                                           ║
 ║     • Geração progressiva até concurso 7051                                ║
@@ -453,7 +467,7 @@ def main():
 
     print("""
 ======================================================================
-🎯 PROBABILIDADES CALCULADAS (Backtest 7044 concursos)
+🎯 PROBABILIDADES CALCULADAS (Backtest 7045 concursos)
 ======================================================================
 
 📊 OPÇÃO 1: 56 JOGOS (R$ 168,00)
@@ -522,7 +536,7 @@ def send_telegram_summary(games_schedule: List[Dict], prob_56: Dict, prob_70: Di
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📊 BACKTEST (7044 concursos):
+📊 BACKTEST (7045 concursos):
 
 📋 OPÇÃO 1: 56 JOGOS (R$ 168)
    🎯 3 acertos: {prob_56['hit_3']}%/jogo
@@ -536,7 +550,7 @@ def send_telegram_summary(games_schedule: List[Dict], prob_56: Dict, prob_70: Di
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📅 PRÓXIMOS SORTEIOS:
+📅 CONCURSOS FUTUROS (7046 a 7050):
 """
 
         for g in games_schedule[:5]:
