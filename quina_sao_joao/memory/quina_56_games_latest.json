@@ -1,6 +1,6 @@
 {
   "option": 1,
-  "name": "COBERTURA 100% DEZENAS",
+  "name": "CALIBRADO 7046 - 2026-06-10",
   "games": 56,
   "cost": 168.0,
   "coverage": {
@@ -8,625 +8,625 @@
     "total_dezenas": 8,
     "percentage": 100.0,
     "hot_covered": 7,
-    "cold_covered": 0
+    "cold_covered": 3
   },
   "portfolio": [
     {
       "id": 1,
       "numbers": [
-        4,
-        5,
-        11,
         12,
-        26
+        13,
+        14,
+        17,
+        18
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 2,
       "numbers": [
-        4,
-        5,
-        11,
         12,
-        29
+        13,
+        14,
+        17,
+        21
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 3,
       "numbers": [
-        4,
-        5,
-        11,
         12,
-        31
+        13,
+        14,
+        17,
+        23
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 4,
       "numbers": [
-        4,
-        5,
-        11,
         12,
-        32
+        13,
+        14,
+        17,
+        28
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 5,
       "numbers": [
-        4,
-        5,
-        11,
         12,
-        41
+        13,
+        14,
+        17,
+        29
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 6,
       "numbers": [
-        4,
-        5,
-        11,
         12,
+        13,
+        14,
+        17,
         42
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 7,
       "numbers": [
-        4,
-        5,
-        11,
         12,
-        51
+        13,
+        14,
+        17,
+        48
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 8,
       "numbers": [
-        4,
-        5,
-        11,
         12,
-        52
+        13,
+        14,
+        17,
+        53
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 9,
       "numbers": [
-        4,
-        5,
-        11,
         12,
-        61
+        13,
+        14,
+        17,
+        54
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 10,
       "numbers": [
-        4,
-        5,
-        11,
         12,
-        62
+        13,
+        14,
+        17,
+        55
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 11,
       "numbers": [
-        4,
-        5,
-        11,
         12,
-        71
+        13,
+        14,
+        17,
+        56
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 12,
       "numbers": [
-        4,
-        5,
-        11,
         12,
-        72
+        13,
+        14,
+        17,
+        67
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 13,
       "numbers": [
-        4,
-        5,
-        11,
-        26,
-        29
+        12,
+        13,
+        14,
+        17,
+        71
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 14,
       "numbers": [
-        4,
-        5,
-        11,
-        26,
-        31
+        12,
+        13,
+        14,
+        17,
+        74
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 15,
       "numbers": [
-        4,
-        5,
-        11,
-        26,
-        32
+        12,
+        13,
+        14,
+        18,
+        21
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 16,
       "numbers": [
-        4,
-        5,
-        11,
-        26,
-        41
+        12,
+        13,
+        14,
+        18,
+        23
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 17,
       "numbers": [
-        4,
-        5,
-        11,
-        26,
-        42
+        12,
+        13,
+        14,
+        18,
+        28
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 18,
       "numbers": [
-        4,
-        5,
-        11,
-        26,
-        51
+        12,
+        13,
+        14,
+        18,
+        29
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 19,
       "numbers": [
-        4,
-        5,
-        11,
-        26,
-        52
+        12,
+        13,
+        14,
+        18,
+        42
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 20,
       "numbers": [
-        4,
-        5,
-        11,
-        26,
-        61
+        12,
+        13,
+        14,
+        18,
+        48
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 21,
       "numbers": [
-        4,
-        5,
-        11,
-        26,
-        62
+        12,
+        13,
+        14,
+        18,
+        53
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 22,
       "numbers": [
-        4,
-        5,
-        11,
-        26,
-        71
+        12,
+        13,
+        14,
+        18,
+        54
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 23,
       "numbers": [
-        4,
-        5,
-        11,
-        26,
-        72
+        12,
+        13,
+        14,
+        18,
+        55
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 24,
       "numbers": [
-        4,
-        5,
-        11,
-        29,
-        31
+        12,
+        13,
+        14,
+        18,
+        56
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 25,
       "numbers": [
-        4,
-        5,
-        11,
-        29,
-        32
+        12,
+        13,
+        14,
+        18,
+        67
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 26,
       "numbers": [
-        4,
-        5,
-        11,
-        29,
-        41
+        12,
+        13,
+        14,
+        18,
+        71
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 27,
       "numbers": [
-        4,
-        5,
-        11,
-        29,
-        42
+        12,
+        13,
+        14,
+        18,
+        74
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 28,
       "numbers": [
-        4,
-        5,
-        11,
-        29,
-        51
+        12,
+        13,
+        14,
+        21,
+        23
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 29,
       "numbers": [
-        4,
-        5,
-        11,
-        29,
-        52
+        12,
+        13,
+        14,
+        21,
+        28
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 30,
       "numbers": [
-        4,
-        5,
-        11,
-        29,
-        61
+        12,
+        13,
+        14,
+        21,
+        29
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 31,
       "numbers": [
-        4,
-        5,
-        11,
-        29,
-        62
+        12,
+        13,
+        14,
+        21,
+        42
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 32,
       "numbers": [
-        4,
-        5,
-        11,
-        29,
-        71
+        12,
+        13,
+        14,
+        21,
+        48
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 33,
       "numbers": [
-        4,
-        5,
-        11,
-        29,
-        72
+        12,
+        13,
+        14,
+        21,
+        53
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 34,
       "numbers": [
-        4,
-        5,
-        11,
-        31,
-        32
+        12,
+        13,
+        14,
+        21,
+        54
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 35,
       "numbers": [
-        4,
-        5,
-        11,
-        31,
-        41
+        12,
+        13,
+        14,
+        21,
+        55
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 36,
       "numbers": [
-        4,
-        5,
-        11,
-        31,
-        42
+        12,
+        13,
+        14,
+        21,
+        56
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 37,
       "numbers": [
-        4,
-        5,
-        11,
-        31,
-        51
+        12,
+        13,
+        14,
+        21,
+        67
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 38,
       "numbers": [
-        4,
-        5,
-        11,
-        31,
-        52
+        12,
+        13,
+        14,
+        21,
+        71
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 39,
       "numbers": [
-        4,
-        5,
-        11,
-        31,
-        61
+        12,
+        13,
+        14,
+        21,
+        74
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 40,
       "numbers": [
-        4,
-        5,
-        11,
-        31,
-        62
+        12,
+        13,
+        14,
+        23,
+        28
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 41,
       "numbers": [
-        4,
-        5,
-        11,
-        31,
-        71
+        12,
+        13,
+        14,
+        23,
+        29
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 42,
       "numbers": [
-        4,
-        5,
-        11,
-        31,
-        72
+        12,
+        13,
+        14,
+        23,
+        42
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 43,
       "numbers": [
-        4,
-        5,
-        11,
-        32,
-        41
+        12,
+        13,
+        14,
+        23,
+        48
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 44,
       "numbers": [
-        4,
-        5,
-        11,
-        32,
-        42
+        12,
+        13,
+        14,
+        23,
+        53
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 45,
       "numbers": [
-        4,
-        5,
-        11,
-        32,
-        51
+        12,
+        13,
+        14,
+        23,
+        54
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 46,
       "numbers": [
-        4,
-        5,
-        11,
-        32,
-        52
+        12,
+        13,
+        14,
+        23,
+        55
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 47,
       "numbers": [
-        4,
-        5,
-        11,
-        32,
-        61
+        12,
+        13,
+        14,
+        23,
+        56
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 48,
       "numbers": [
-        4,
-        5,
-        11,
-        32,
-        62
+        12,
+        13,
+        14,
+        23,
+        67
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 49,
       "numbers": [
-        4,
-        5,
-        11,
-        32,
+        12,
+        13,
+        14,
+        23,
         71
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 50,
       "numbers": [
-        4,
-        5,
-        11,
-        32,
-        72
+        12,
+        13,
+        14,
+        23,
+        74
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 51,
       "numbers": [
-        4,
-        5,
-        11,
-        41,
-        42
+        12,
+        13,
+        14,
+        28,
+        29
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 52,
       "numbers": [
-        4,
-        5,
-        11,
-        41,
-        51
+        12,
+        13,
+        14,
+        28,
+        42
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 53,
       "numbers": [
-        4,
-        5,
-        11,
-        41,
-        52
+        12,
+        13,
+        14,
+        28,
+        48
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 54,
       "numbers": [
-        4,
-        5,
-        11,
-        41,
-        61
+        12,
+        13,
+        14,
+        28,
+        53
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 55,
       "numbers": [
-        4,
-        5,
-        11,
-        41,
-        62
+        12,
+        13,
+        14,
+        28,
+        54
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     },
     {
       "id": 56,
       "numbers": [
-        4,
-        5,
-        11,
-        41,
-        71
+        12,
+        13,
+        14,
+        28,
+        55
       ],
-      "strategy": "100%_DEZENA"
+      "strategy": "CALIBRADO_7046"
     }
   ],
-  "generated_at": "2026-06-08T06:34:00.872444"
+  "generated_at": "2026-06-10T04:27:28.676629"
 }
