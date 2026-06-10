@@ -27,9 +27,9 @@ QUINA_PRICE = 3.00
 MAX_DEZENA = 80
 TARGET_CONTEST = 7051
 
-# Hot/Cold Numbers (7044 concursos)
-HOT_NUMBERS = [4, 26, 52, 44, 49, 31, 29, 16, 56, 5, 53, 42, 39, 15, 9]
-COLD_NUMBERS = [2, 36, 7, 69, 28, 17, 35, 22, 30, 50, 68, 1, 20, 25, 58]
+# Hot/Cold Numbers (7046 concursos - após calibração 7047)
+HOT_NUMBERS = [55, 29, 12, 48, 2, 53, 56, 14, 23, 42, 74, 35, 49, 24, 15]
+COLD_NUMBERS = [19, 28, 71, 21, 67, 18, 8, 69, 6, 62, 43, 51, 59, 79, 46]
 
 
 # ============================================
@@ -224,7 +224,7 @@ class QuinaBacktestEngine:
         if len(self.current_cold) > 15:
             self.current_cold = self.current_cold[:15]
 
-    def run_backtest(self, start_index: int = 0, end_index: int = 7045) -> Dict:
+    def run_backtest(self, start_index: int = 0, end_index: int = 7046) -> Dict:
         """Executa backtest nos concursos"""
         print("\n" + "="*70)
         print("🔬 BACKTEST: 56 JOGOS vs 70 JOGOS")
@@ -303,7 +303,7 @@ class QuinaBacktestEngine:
         backtest = self.run_backtest(start_index=0, end_index=len(self.history))
 
         print(f"""
-📊 RESULTADOS DO BACKTEST (7045 concursos):
+📊 RESULTADOS DO BACKTEST (7046 concursos):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📋 OPÇÃO 1: 56 JOGOS (R$ 168,00)
@@ -319,23 +319,22 @@ class QuinaBacktestEngine:
    🎯 5 acertos: {backtest['70_games']['percentages']['hit_5']}% por concurso
 """)
 
-        # Gerar jogos para concursos futuros (7046 a 7051)
-        # 7045 já aconteceu, então começamos do 7046
+        # Gerar jogos para concursos futuros (7047 a 7051)
+        # 7045 e 7046 já aconteceram, começamos do 7047
         games_schedule = []
 
         # Detectar último concurso no histórico
-        if len(self.history) >= 7045:
-            last_contest = 7045  # 7045 já foi realizado
+        if len(self.history) >= 7046:
+            last_contest = 7046  # 7046 já foi realizado
+        elif len(self.history) >= 7045:
+            last_contest = 7045
         else:
             last_contest = len(self.history)  # Fallback
 
-        # Mostrar apenas 5 concursos futuros (7046, 7047, 7048, 7049, 7050)
+        # Mostrar apenas 5 concursos futuros (7047, 7048, 7049, 7050, 7051)
         future_concourses = []
-        for c in range(7046, 7051):  # 7046 a 7050
+        for c in range(7047, 7052):  # 7047 a 7051
             future_concourses.append(c)
-        # Adicionar 7051 se não estiver na lista
-        if 7051 not in future_concourses:
-            future_concourses.append(7051)
 
         for next_contest in future_concourses:
             days_until = (datetime(2026, 6, 28) - datetime.now()).days
@@ -536,7 +535,7 @@ def send_telegram_summary(games_schedule: List[Dict], prob_56: Dict, prob_70: Di
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📊 BACKTEST (7045 concursos):
+📊 BACKTEST (7046 concursos):
 
 📋 OPÇÃO 1: 56 JOGOS (R$ 168)
    🎯 3 acertos: {prob_56['hit_3']}%/jogo
@@ -550,7 +549,7 @@ def send_telegram_summary(games_schedule: List[Dict], prob_56: Dict, prob_70: Di
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📅 CONCURSOS FUTUROS (7046 a 7050):
+📅 CONCURSOS FUTUROS (7047 a 7051):
 """
 
         for g in games_schedule[:5]:

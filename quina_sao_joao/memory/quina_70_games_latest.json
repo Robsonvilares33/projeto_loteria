@@ -1,786 +1,631 @@
 {
   "option": 2,
-  "name": "CALIBRADO 7046 - 2026-06-10",
+  "name": "CALIBRADO 7047 - 2026-06-10",
   "games": 70,
   "cost": 210.0,
   "coverage": {
     "dezenas_covered": 8,
     "total_dezenas": 8,
     "percentage": 100.0,
-    "hot_covered": 7,
-    "cold_covered": 3
+    "hot_covered": 12,
+    "cold_covered": 6
   },
   "portfolio": [
     {
       "id": 1,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
-        18
+        21,
+        35,
+        42
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 2,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
-        21
+        21,
+        35,
+        53
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 3,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
-        23
+        21,
+        35,
+        67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 4,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
-        28
+        21,
+        35,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 5,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
-        29
+        21,
+        42,
+        53
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 6,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
-        42
+        21,
+        42,
+        67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 7,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
-        48
+        21,
+        42,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 8,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
-        53
+        21,
+        53,
+        67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 9,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
-        54
+        21,
+        53,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 10,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
-        55
+        21,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 11,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
-        56
+        35,
+        42,
+        53
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 12,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
+        35,
+        42,
         67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 13,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
+        35,
+        42,
         71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 14,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        17,
-        74
+        35,
+        53,
+        67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 15,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        18,
-        21
+        35,
+        53,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 16,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        18,
-        23
+        35,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 17,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        18,
-        28
+        42,
+        53,
+        67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 18,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        18,
-        29
+        42,
+        53,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 19,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        18,
-        42
+        42,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 20,
       "numbers": [
+        2,
         12,
-        13,
-        14,
-        18,
-        48
+        53,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 21,
       "numbers": [
-        12,
-        13,
-        14,
-        18,
+        2,
+        21,
+        35,
+        42,
         53
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 22,
       "numbers": [
-        12,
-        13,
-        14,
-        18,
-        54
+        2,
+        21,
+        35,
+        42,
+        67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 23,
       "numbers": [
-        12,
-        13,
-        14,
-        18,
-        55
+        2,
+        21,
+        35,
+        42,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 24,
       "numbers": [
-        12,
-        13,
-        14,
-        18,
-        56
+        2,
+        21,
+        35,
+        53,
+        67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 25,
       "numbers": [
-        12,
-        13,
-        14,
-        18,
-        67
+        2,
+        21,
+        35,
+        53,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 26,
       "numbers": [
-        12,
-        13,
-        14,
-        18,
+        2,
+        21,
+        35,
+        67,
         71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 27,
       "numbers": [
-        12,
-        13,
-        14,
-        18,
-        74
+        2,
+        21,
+        42,
+        53,
+        67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 28,
       "numbers": [
-        12,
-        13,
-        14,
+        2,
         21,
-        23
+        42,
+        53,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 29,
       "numbers": [
-        12,
-        13,
-        14,
+        2,
         21,
-        28
+        42,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 30,
       "numbers": [
-        12,
-        13,
-        14,
+        2,
         21,
-        29
+        53,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 31,
       "numbers": [
-        12,
-        13,
-        14,
-        21,
-        42
+        2,
+        35,
+        42,
+        53,
+        67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 32,
       "numbers": [
-        12,
-        13,
-        14,
-        21,
-        48
+        2,
+        35,
+        42,
+        53,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 33,
       "numbers": [
-        12,
-        13,
-        14,
-        21,
-        53
+        2,
+        35,
+        42,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 34,
       "numbers": [
-        12,
-        13,
-        14,
-        21,
-        54
+        2,
+        35,
+        53,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 35,
       "numbers": [
-        12,
-        13,
-        14,
-        21,
-        55
+        2,
+        42,
+        53,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 36,
       "numbers": [
         12,
-        13,
-        14,
         21,
-        56
+        35,
+        42,
+        53
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 37,
       "numbers": [
         12,
-        13,
-        14,
         21,
+        35,
+        42,
         67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 38,
       "numbers": [
         12,
-        13,
-        14,
         21,
+        35,
+        42,
         71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 39,
       "numbers": [
         12,
-        13,
-        14,
         21,
-        74
+        35,
+        53,
+        67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 40,
       "numbers": [
         12,
-        13,
-        14,
-        23,
-        28
+        21,
+        35,
+        53,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 41,
       "numbers": [
         12,
-        13,
-        14,
-        23,
-        29
+        21,
+        35,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 42,
       "numbers": [
         12,
-        13,
-        14,
-        23,
-        42
+        21,
+        42,
+        53,
+        67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 43,
       "numbers": [
         12,
-        13,
-        14,
-        23,
-        48
+        21,
+        42,
+        53,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 44,
       "numbers": [
         12,
-        13,
-        14,
-        23,
-        53
+        21,
+        42,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 45,
       "numbers": [
         12,
-        13,
-        14,
-        23,
-        54
+        21,
+        53,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 46,
       "numbers": [
         12,
-        13,
-        14,
-        23,
-        55
+        35,
+        42,
+        53,
+        67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 47,
       "numbers": [
         12,
-        13,
-        14,
-        23,
-        56
+        35,
+        42,
+        53,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 48,
       "numbers": [
         12,
-        13,
-        14,
-        23,
-        67
+        35,
+        42,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 49,
       "numbers": [
         12,
-        13,
-        14,
-        23,
+        35,
+        53,
+        67,
         71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 50,
       "numbers": [
         12,
-        13,
-        14,
-        23,
-        74
+        42,
+        53,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 51,
       "numbers": [
-        12,
-        13,
-        14,
-        28,
-        29
+        21,
+        35,
+        42,
+        53,
+        67
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 52,
       "numbers": [
-        12,
-        13,
-        14,
-        28,
-        42
+        21,
+        35,
+        42,
+        53,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 53,
       "numbers": [
-        12,
-        13,
-        14,
-        28,
-        48
+        21,
+        35,
+        42,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 54,
       "numbers": [
-        12,
-        13,
-        14,
-        28,
-        53
+        21,
+        35,
+        53,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 55,
       "numbers": [
-        12,
-        13,
-        14,
-        28,
-        54
+        21,
+        42,
+        53,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     },
     {
       "id": 56,
       "numbers": [
-        12,
-        13,
-        14,
-        28,
-        55
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 57,
-      "numbers": [
-        12,
-        13,
-        14,
-        28,
-        56
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 58,
-      "numbers": [
-        12,
-        13,
-        14,
-        28,
-        67
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 59,
-      "numbers": [
-        12,
-        13,
-        14,
-        28,
-        71
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 60,
-      "numbers": [
-        12,
-        13,
-        14,
-        28,
-        74
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 61,
-      "numbers": [
-        12,
-        13,
-        14,
-        29,
-        42
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 62,
-      "numbers": [
-        12,
-        13,
-        14,
-        29,
-        48
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 63,
-      "numbers": [
-        12,
-        13,
-        14,
-        29,
-        53
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 64,
-      "numbers": [
-        12,
-        13,
-        14,
-        29,
-        54
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 65,
-      "numbers": [
-        12,
-        13,
-        14,
-        29,
-        55
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 66,
-      "numbers": [
-        12,
-        13,
-        14,
-        29,
-        56
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 67,
-      "numbers": [
-        12,
-        13,
-        14,
-        29,
-        67
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 68,
-      "numbers": [
-        12,
-        13,
-        14,
-        29,
-        71
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 69,
-      "numbers": [
-        12,
-        13,
-        14,
-        29,
-        74
-      ],
-      "strategy": "CALIBRADO_7046"
-    },
-    {
-      "id": 70,
-      "numbers": [
-        12,
-        13,
-        14,
+        35,
         42,
-        48
+        53,
+        67,
+        71
       ],
-      "strategy": "CALIBRADO_7046"
+      "strategy": "CALIBRADO_7047"
     }
-  ],
-  "generated_at": "2026-06-10T04:27:28.681183"
+  ]
 }
